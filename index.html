@@ -1,65 +1,350 @@
-<!DOCTYPE html>
+# Crear el archivo index.html principal (layout persistente)
+html_content = '''<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Antivejez - Prototipo</title>
-    
-    <!-- Estilos: Asegúrate de que la carpeta 'css' exista y contenga 'styles.css' -->
+    <title>Doctor Antivejez - Plataforma Médica</title>
     <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- Dependencias Externas -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Layout Principal -->
-    <div class="app-layout">
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <!-- Asegúrate de tener la carpeta 'assets' con tu logo -->
-                <img src="assets/logo.png" alt="Logo Doctor Antivejez" class="logo">
+    <!-- Header superior -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="assets/logo.png" alt="Doctor Antivejez" class="logo" onerror="this.style.display='none'">
+                <span class="logo-text">DOCTOR Antivejez</span>
             </div>
-            <ul class="menu-list">
-                <li><a href="#dashboard" class="menu-item"><i class="fas fa-chart-line fa-fw"></i> <span>Dashboard</span></a></li>
-                <li><a href="#historias" class="menu-item"><i class="fas fa-book-medical fa-fw"></i> <span>Historias</span></a></li>
-            </ul>
+            
+            <div class="search-section">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Buscar paciente o historia..." class="search-input">
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="header-btn">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <button class="header-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-menu">
+                    <img src="assets/user-avatar.png" alt="Usuario" class="user-avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiM0Nzg5RkYiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSI4IiB5PSI4Ij4KPHBhdGggZD0iTTEyIDEyQzE0LjIwOTEgMTIgMTYgMTAuMjA5MSAxNiA4QzE2IDUuNzkwODYgMTQuMjA5MSA0IDEyIDRDOS43OTA4NiA0IDggNS43OTA4NiA4IDhDOCAxMC4yMDkxIDkuNzkwODYgMTIgMTIgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTIgMTRDOC4xMzQwMSAxNCA1IDE3LjEzNCA1IDIxSDMuMDAzVjE5QzMuMDAzIDE1LjY4NiA1LjY4NiAxMyA5IDEzSDEyIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4KPC9zdmc+'">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Sidebar lateral -->
+        <nav class="sidebar">
+            <div class="sidebar-content">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#dashboard" class="nav-link active" data-route="dashboard">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#historias" class="nav-link" data-route="historias">
+                            <i class="fas fa-file-medical"></i>
+                            <span>Historias</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#profesionales" class="nav-link" data-route="profesionales">
+                            <i class="fas fa-user-md"></i>
+                            <span>Profesionales</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#agente-ia" class="nav-link" data-route="agente-ia">
+                            <i class="fas fa-robot"></i>
+                            <span>Agente IA</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reportes" class="nav-link" data-route="reportes">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Reportes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#ajustes" class="nav-link" data-route="ajustes">
+                            <i class="fas fa-cog"></i>
+                            <span>Ajustes</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
             <div class="sidebar-footer">
-                <div class="user-profile">
-                    <img src="https://i.pravatar.cc/40?u=dr-mendez" alt="Dr. Mendez">
-                    <div class="user-info">
-                        <span class="user-name">Dr. Juan C. Mendez</span>
-                        <span class="user-role">Médico</span>
+                <div class="doctor-info">
+                    <div class="doctor-avatar">
+                        <img src="assets/doctor-avatar.png" alt="Dr." onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMyRUNDNzEiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSI4IiB5PSI4Ij4KPHBhdGggZD0iTTEyIDEyQzE0LjIwOTEgMTIgMTYgMTAuMjA5MSAxNiA4QzE2IDUuNzkwODYgMTQuMjA5MSA0IDEyIDRDOS43OTA4NiA0IDggNS43OTA4NiA4IDhDOCAxMC4yMDkxIDkuNzkwODYgMTIgMTIgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTIgMTRDOC4xMzQwMSAxNCA1IDE3LjEzNCA1IDIxSDMuMDAzVjE5QzMuMDAzIDE1LjY4NiA1LjY4NiAxMyA5IDEzSDEyIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4KPC9zdmc+'">
+                    </div>
+                    <div class="doctor-details">
+                        <h4>Dr. Juan C. Mendez</h4>
+                        <p>Médico Antienvejecimiento</p>
                     </div>
                 </div>
+                <button class="logout-btn" title="Salir">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
             </div>
         </nav>
 
-        <div class="app-container">
-            <header class="app-header">
-                <button class="sidebar-toggle" id="sidebar-toggle-btn"><i class="fas fa-bars"></i></button>
-                <div class="header-search"><i class="fas fa-search"></i><input type="text" placeholder="Buscar..."></div>
-            </header>
-            <main id="app-root" class="main-content">
-                <!-- El contenido se cargará aquí. -->
-            </main>
+        <!-- Área de contenido dinámico -->
+        <main id="app-root" class="main-content">
+            <!-- El contenido se carga aquí dinámicamente -->
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Cargando...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Modal para Test Biofísico -->
+    <div id="biofisico-modal" class="modal">
+        <div class="modal-content biofisico-modal-content">
+            <div class="modal-header">
+                <h2>Test Biofísico</h2>
+                <button class="modal-close" onclick="closeBiofisicoModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="biofisico-container">
+                    <div class="biofisico-form">
+                        <form id="biofisico-form">
+                            <!-- Género -->
+                            <div class="form-group">
+                                <label for="genero">Género *</label>
+                                <select id="genero" name="genero" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="masculino">Masculino</option>
+                                    <option value="masculino-deportivo">Masculino Deportivo</option>
+                                    <option value="femenino">Femenino</option>
+                                    <option value="femenino-deportivo">Femenino Deportivo</option>
+                                </select>
+                            </div>
+
+                            <!-- % Grasa -->
+                            <div class="form-group">
+                                <label>% Grasa</label>
+                                <div class="dual-input">
+                                    <input type="number" id="grasa-valor" placeholder="Valor" step="0.1">
+                                    <input type="text" id="grasa-calculada" placeholder="Edad Calculada" readonly>
+                                </div>
+                                <button type="button" class="btn-calcular" onclick="calcularItem('grasa')">Bueno</button>
+                            </div>
+
+                            <!-- Índice de Masa Corporal -->
+                            <div class="form-group">
+                                <label>Índice de Masa Corporal (IMC)</label>
+                                <div class="dual-input">
+                                    <input type="number" id="imc-valor" placeholder="Valor" step="0.1">
+                                    <input type="text" id="imc-calculada" placeholder="Edad Calculada" readonly>
+                                </div>
+                                <button type="button" class="btn-calcular" onclick="calcularItem('imc')">Bueno</button>
+                            </div>
+
+                            <!-- Reflejos Digitales -->
+                            <div class="form-group">
+                                <label>Reflejos Digitales (cm)</label>
+                                <div class="triple-input">
+                                    <input type="number" id="reflejos-1" placeholder="Medición 1" step="0.1">
+                                    <input type="number" id="reflejos-2" placeholder="Medición 2" step="0.1">
+                                    <input type="number" id="reflejos-3" placeholder="Medición 3" step="0.1">
+                                </div>
+                                <input type="text" id="reflejos-calculada" placeholder="Edad Calculada" readonly>
+                                <button type="button" class="btn-calcular" onclick="calcularItem('reflejos')">Bueno</button>
+                            </div>
+
+                            <!-- Acomodación Visual -->
+                            <div class="form-group">
+                                <label>Acomodación Visual (cm)</label>
+                                <div class="dual-input">
+                                    <input type="number" id="acomodacion-valor" placeholder="Valor" step="0.1">
+                                    <input type="text" id="acomodacion-calculada" placeholder="Edad Calculada" readonly>
+                                </div>
+                                <button type="button" class="btn-calcular" onclick="calcularItem('acomodacion')">Bueno</button>
+                            </div>
+
+                            <!-- Balance Estático -->
+                            <div class="form-group">
+                                <label>Balance Estático (seg)</label>
+                                <div class="triple-input">
+                                    <input type="number" id="balance-1" placeholder="Medición 1" step="0.1">
+                                    <input type="number" id="balance-2" placeholder="Medición 2" step="0.1">
+                                    <input type="number" id="balance-3" placeholder="Medición 3" step="0.1">
+                                </div>
+                                <input type="text" id="balance-calculada" placeholder="Edad Calculada" readonly>
+                                <button type="button" class="btn-calcular" onclick="calcularItem('balance')">Bueno</button>
+                            </div>
+
+                            <!-- Hidratación Cutánea -->
+                            <div class="form-group">
+                                <label>Hidratación Cutánea (seg)</label>
+                                <div class="dual-input">
+                                    <input type="number" id="hidratacion-valor" placeholder="Valor" step="0.1">
+                                    <input type="text" id="hidratacion-calculada" placeholder="Edad Calculada" readonly>
+                                </div>
+                                <button type="button" class="btn-calcular" onclick="calcularItem('hidratacion')">Bueno</button>
+                            </div>
+
+                            <!-- Tensión Arterial Sistólica -->
+                            <div class="form-group">
+                                <label>Tensión Arterial Sistólica (mmHg)</label>
+                                <div class="dual-input">
+                                    <input type="number" id="sistolica-valor" placeholder="Valor" step="1">
+                                    <input type="text" id="sistolica-calculada" placeholder="Edad Calculada" readonly>
+                                </div>
+                                <button type="button" class="btn-calcular" onclick="calcularItem('sistolica')">Bueno</button>
+                            </div>
+
+                            <!-- Tensión Arterial Diastólica -->
+                            <div class="form-group">
+                                <label>Tensión Arterial Diastólica (mmHg)</label>
+                                <div class="dual-input">
+                                    <input type="number" id="diastolica-valor" placeholder="Valor" step="1">
+                                    <input type="text" id="diastolica-calculada" placeholder="Edad Calculada" readonly>
+                                </div>
+                                <button type="button" class="btn-calcular" onclick="calcularItem('diastolica')">Bueno</button>
+                            </div>
+
+                            <!-- Edad Cronológica -->
+                            <div class="form-group">
+                                <label>Edad Cronológica</label>
+                                <input type="number" id="edad-cronologica" placeholder="Años" readonly>
+                            </div>
+
+                            <!-- Edad Biofísica -->
+                            <div class="form-group">
+                                <label>Edad Biofísica</label>
+                                <input type="number" id="edad-biofisica" placeholder="Calculada automáticamente" readonly>
+                            </div>
+
+                            <!-- Edad Diferencial -->
+                            <div class="form-group">
+                                <label>Edad Diferencial</label>
+                                <input type="text" id="edad-diferencial" placeholder="Diferencia" readonly>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="biofisico-graficos">
+                        <h3><i class="fas fa-chart-line"></i> Gráficos por Items</h3>
+                        <div class="graficos-grid">
+                            <div class="grafico-item">
+                                <h4>% Grasa</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-grasa">--</span></span>
+                                    <span>Diferencia: <span id="diff-grasa">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-grasa">Bueno</div>
+                            </div>
+                            <div class="grafico-item">
+                                <h4>IMC</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-imc">--</span></span>
+                                    <span>Diferencia: <span id="diff-imc">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-imc">Bueno</div>
+                            </div>
+                            <div class="grafico-item">
+                                <h4>Reflejos Digitales</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-reflejos">--</span></span>
+                                    <span>Diferencia: <span id="diff-reflejos">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-reflejos">Bueno</div>
+                            </div>
+                            <div class="grafico-item">
+                                <h4>Acomodación Visual</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-acomodacion">--</span></span>
+                                    <span>Diferencia: <span id="diff-acomodacion">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-acomodacion">Bueno</div>
+                            </div>
+                            <div class="grafico-item">
+                                <h4>Balance Estático</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-balance">--</span></span>
+                                    <span>Diferencia: <span id="diff-balance">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-balance">Bueno</div>
+                            </div>
+                            <div class="grafico-item">
+                                <h4>Hidratación Cutánea</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-hidratacion">--</span></span>
+                                    <span>Diferencia: <span id="diff-hidratacion">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-hidratacion">Bueno</div>
+                            </div>
+                            <div class="grafico-item">
+                                <h4>Presión Sistólica</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-sistolica">--</span></span>
+                                    <span>Diferencia: <span id="diff-sistolica">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-sistolica">Bueno</div>
+                            </div>
+                            <div class="grafico-item">
+                                <h4>Presión Diastólica</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-diastolica">--</span></span>
+                                    <span>Diferencia: <span id="diff-diastolica">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-diastolica">Bueno</div>
+                            </div>
+                            <div class="grafico-item">
+                                <h4>Pulso en Reposo</h4>
+                                <div class="grafico-values">
+                                    <span>Edad Calculada: <span id="grafico-pulso">--</span></span>
+                                    <span>Diferencia: <span id="diff-pulso">--</span></span>
+                                </div>
+                                <div class="status-indicator" id="status-pulso">Bueno</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeBiofisicoModal()">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="calcularEdadBiofisica()">
+                    <i class="fas fa-calculator"></i> Calcular
+                </button>
+                <button type="button" class="btn btn-success" onclick="guardarTestBiofisico()">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+                <button type="button" class="btn btn-info" onclick="volverDetalleModal()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+            </div>
         </div>
     </div>
 
-    <div id="toast-container"></div>
-
-    <!-- ======================================================= -->
-    <!-- ORDEN DE SCRIPTS: Este orden es CRÍTICO para que todo funcione. -->
-    <!-- 1. api.js: Define el objeto 'api' (sin dependencias) -->
-    <!-- 2. historias.js, dashboard.js: Definen funciones de inicialización (dependen de 'api') -->
-    <!-- 3. router.js: Define el objeto 'router' (depende de las funciones de inicialización) -->
-    <!-- 4. main.js: Pone todo en marcha (depende de 'router') -->
-    <!-- ======================================================= -->
+    <!-- Scripts -->
     <script src="js/api.js"></script>
+    <script src="js/router.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/historias.js"></script>
-    <script src="js/router.js"></script>
     <script src="js/main.js"></script>
 </body>
-</html>
+</html>'''
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("✅ Archivo index.html creado exitosamente")

@@ -1,11 +1,166 @@
-<div class="page-header">
-    <h1 class="page-title">Dashboard</h1>
+<div class="dashboard-header">
+    <h1 class="dashboard-title">Dashboard</h1>
 </div>
 
-<!-- Contenido del dashboard (gráficos, etc.) -->
-<!-- Lo he simplificado por ahora, lo conectaremos con dashboard.js -->
-<div class="card">
-    <h2>Bienvenido al Prototipo</h2>
-    <p>Este es el dashboard principal. El contenido de los gráficos se cargará aquí a través de JavaScript.</p>
-    <canvas id="activePatientsChart" style="margin-top: 1rem; max-height: 300px;"></canvas>
+<!-- Tarjetas de estadísticas -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Edad Biológica Promedio</h3>
+        <div class="stat-value">52.3</div>
+        <div class="stat-change">
+            <i class="fas fa-arrow-down"></i>
+            -2.1 vs mes anterior
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Pacientes Registrados</h3>
+        <div class="stat-value">511</div>
+        <div class="stat-change">
+            <i class="fas fa-arrow-up"></i>
+            +12% este mes
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Nuevos Registros</h3>
+        <div class="stat-value">43</div>
+        <div class="stat-change">
+            <i class="fas fa-arrow-up"></i>
+            +8% vs mes anterior
+        </div>
+    </div>
+</div>
+
+<!-- Gráficos principales -->
+<div class="charts-grid">
+    <!-- Gráfico de Pacientes Activos -->
+    <div class="chart-card">
+        <div class="chart-header">
+            <h2 class="chart-title">Pacientes Activos</h2>
+            <select class="chart-filter">
+                <option value="ultimo-año">Último Año</option>
+                <option value="ultimos-6-meses">Últimos 6 Meses</option>
+                <option value="ultimo-mes">Último Mes</option>
+            </select>
+        </div>
+        <div class="chart-placeholder">
+            Gráfico de Pacientes Activos vs Oncoardio
+        </div>
+    </div>
+    
+    <!-- Gráfico de Edad Biológica -->
+    <div class="chart-card">
+        <div class="chart-header">
+            <h2 class="chart-title">Edad Biológica vs. Cronológica</h2>
+        </div>
+        <div class="chart-placeholder">
+            Gráfico de comparación de edades
+        </div>
+    </div>
+</div>
+
+<!-- Gráficos secundarios -->
+<div class="charts-grid">
+    <!-- Evolución de Edad Biológica -->
+    <div class="chart-card">
+        <div class="chart-header">
+            <h2 class="chart-title">Evolución Edad Biológica (Paciente Actual)</h2>
+        </div>
+        <div class="chart-placeholder">
+            Gráfico de evolución temporal
+        </div>
+    </div>
+    
+    <!-- Comparación por Grupos -->
+    <div class="chart-card">
+        <div class="chart-header">
+            <h2 class="chart-title">Comparación por Grupos</h2>
+        </div>
+        <div class="chart-placeholder">
+            Gráfico de distribución por grupos de edad
+        </div>
+    </div>
+</div>
+
+<!-- Resumen adicional -->
+<div class="stats-grid" style="margin-top: 2rem;">
+    <div class="stat-card">
+        <h3>Tests Biofísicos</h3>
+        <div class="stat-value">156</div>
+        <div class="stat-change">
+            <i class="fas fa-flask"></i>
+            Total realizados
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Promedio Semanal</h3>
+        <div class="stat-value">12</div>
+        <div class="stat-change">
+            <i class="fas fa-calendar-week"></i>
+            Nuevos pacientes
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Mejora Promedio</h3>
+        <div class="stat-value">-8.5</div>
+        <div class="stat-change">
+            <i class="fas fa-trophy"></i>
+            Años de diferencia
+        </div>
+    </div>
+</div>'''
+
+with open('dashboard.html', 'w', encoding='utf-8') as f:
+    f.write(dashboard_html)
+
+print("✅ Archivo dashboard.html creado exitosamente")
+
+# Crear la página historias-lista.html
+historias_lista_html = '''<!-- PÁGINA DE LISTA DE HISTORIAS -->
+<div class="page-header">
+    <div>
+        <h1 class="page-title">
+            <i class="fas fa-file-medical"></i>
+            Gestión de Pacientes
+        </h1>
+        <p class="page-subtitle">2 pacientes registrados</p>
+    </div>
+    <a href="#historias-nuevo" class="btn btn-primary" onclick="goToNuevoHistoria()">
+        <i class="fas fa-plus"></i>
+        Nuevo Paciente
+    </a>
+</div>
+
+<!-- Barra de búsqueda -->
+<div class="search-bar">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" placeholder="Buscar por nombre, apellido, cédula o email...">
+</div>
+
+<!-- Tabla de pacientes -->
+<div class="patients-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>PACIENTE</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>EDAD</th>
+                <th>CONTACTO</th>
+                <th>FECHA REGISTRO</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos se cargan dinámicamente desde JavaScript -->
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 3rem;">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 1rem; color: #6b7280;">Cargando pacientes...</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

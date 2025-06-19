@@ -1,0 +1,17 @@
+# Crear README con instrucciones completas
+readme_content = '''# Doctor Antivejez - Prototipo Médico
+
+## 📋 Descripción del Proyecto
+
+Este es un prototipo funcional (MVP) de la plataforma médica "Doctor Antivejez", desarrollado como una aplicación web de página única (SPA) utilizando tecnologías estándar (HTML, CSS, JavaScript) para superar bloqueantes técnicos y realizar validaciones tempranas con el cliente.
+
+### ✨ Características Principales
+
+- **Gestión de Pacientes**: Crear, leer, actualizar y eliminar historias clínicas
+- **Test Biofísico Completo**: 8 parámetros de medición con cálculos automáticos
+- **Dashboard Interactivo**: Estadísticas y gráficos de la práctica médica
+- **Interfaz Profesional**: Diseño moderno y responsivo
+- **Sistema de Notificaciones**: Toast notifications no intrusivas
+- **Enrutamiento SPA**: Navegación fluida sin recargas de página
+
+## 🏗️ Estructura del Proyecto
