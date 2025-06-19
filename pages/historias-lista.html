@@ -1,0 +1,39 @@
+<div class="page-header">
+    <h1 class="page-title">Gestión de Pacientes</h1>
+    <!-- El href ahora apunta al hash de la ruta para crear un nuevo paciente -->
+    <a href="#historias/nuevo" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Paciente</a>
+</div>
+
+<!-- Barra de búsqueda y filtros -->
+<div class="card" style="margin-bottom: 20px;">
+    <input type="text" id="patient-search" placeholder="Buscar por nombre, apellido, cédula o email..." style="width: 100%; padding: 12px;">
+</div>
+
+<!-- Alerta de error (inicialmente oculta) -->
+<div id="error-alert" class="alert alert-danger" style="display: none;">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>Error al cargar pacientes: Internal Server Error</span>
+</div>
+
+<!-- Contenedor de la tabla -->
+<div class="table-container">
+    <table class="patients-table">
+        <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>Identificación</th>
+                <th>Edad</th>
+                <th>Contacto</th>
+                <th>Fecha Registro</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="patients-table-body">
+            <!-- Las filas se insertarán aquí con JavaScript -->
+        </tbody>
+    </table>
+    <div id="no-patients-message" style="text-align: center; padding: 40px; display: none;">
+        <i class="fas fa-user-friends" style="font-size: 3rem; color: var(--grey-dark); margin-bottom: 15px;"></i>
+        <p>No hay pacientes registrados</p>
+    </div>
+</div>

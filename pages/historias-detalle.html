@@ -1,0 +1,76 @@
+<!-- Banner del Paciente -->
+<div id="patient-banner" class="patient-banner card">
+    <!-- El contenido se llenará dinámicamente -->
+    <div class="banner-placeholder">Cargando datos del paciente...</div>
+</div>
+
+<!-- Contenido Principal con Pestañas -->
+<div class="card">
+    <div class="tabs-container">
+        <nav class="tabs-nav">
+            <button class="tab-link" data-tab="historia-medica">
+                <i class="fas fa-notes-medical"></i> Historia Médica
+            </button>
+            <button class="tab-link active" data-tab="edad-biologica">
+                <i class="fas fa-heartbeat"></i> Edad Biológica
+            </button>
+            <button class="tab-link" data-tab="guia-paciente">
+                <i class="fas fa-book-reader"></i> Guía del Paciente
+            </button>
+            <button class="tab-link" data-tab="nutrigenomica">
+                <i class="fas fa-dna"></i> Alimentación Nutrigenómica
+            </button>
+        </nav>
+
+        <div class="tabs-content">
+            <!-- Contenido Pestaña Historia Médica (Oculto por defecto) -->
+            <div id="historia-medica" class="tab-pane">
+                <h2>Contenido de Historia Médica</h2>
+                <p>Esta sección mostrará los detalles médicos del paciente.</p>
+            </div>
+
+            <!-- Contenido Pestaña Edad Biológica (Visible por defecto) -->
+            <div id="edad-biologica" class="tab-pane active">
+                <div class="page-header" style="margin-bottom: 20px;">
+                    <h2 id="edad-vs-edad-title" class="page-title" style="font-size: 1.5rem;">Edad Cronológica Vs Edad Biológica</h2>
+                </div>
+                <div class="test-cards-grid">
+                    <div class="test-card">
+                        <i class="fas fa-dumbbell"></i>
+                        <span class="test-title">EDAD BIOFÍSICA</span>
+                        <span class="test-value" id="val-biofisica">--</span>
+                        <span class="test-unit">años</span>
+                    </div>
+                    <div class="test-card">
+                        <i class="fas fa-flask"></i>
+                        <span class="test-title">EDAD BIOQUÍMICA</span>
+                        <span class="test-value" id="val-bioquimica">--</span>
+                        <span class="test-unit">años</span>
+                    </div>
+                     <div class="test-card">
+                        <i class="fas fa-pills"></i>
+                        <span class="test-title">EDAD ORTOMOLECULAR</span>
+                        <span class="test-value" id="val-ortomolecular">--</span>
+                        <span class="test-unit">años</span>
+                    </div>
+                     <div class="test-card">
+                        <i class="fas fa-dna"></i>
+                        <span class="test-title">EDAD GENÓMICA</span>
+                        <span class="test-value" id="val-genomica">--</span>
+                        <span class="test-unit">años</span>
+                    </div>
+                </div>
+                <h3 class="form-section-title" style="margin-top: 40px;">Perfil Multidimensional de Envejecimiento</h3>
+                <!-- Aquí irían más gráficos o datos -->
+            </div>
+            
+            <!-- Otras pestañas (Ocultas por defecto) -->
+            <div id="guia-paciente" class="tab-pane">
+                <h2>Guía del Paciente</h2>
+            </div>
+            <div id="nutrigenomica" class="tab-pane">
+                <h2>Alimentación Nutrigenómica</h2>
+            </div>
+        </div>
+    </div>
+</div>

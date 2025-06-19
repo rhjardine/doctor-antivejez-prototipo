@@ -1,0 +1,122 @@
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Registrar Nuevo Paciente</h1>
+        <p class="page-subtitle">Complete la información de la historia clínica</p>
+    </div>
+    <a href="#historias" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Volver a la Lista</a>
+</div>
+
+<form id="new-patient-form" class="card">
+    <div class="form-section">
+        <div class="form-column-left">
+            <!-- Sección de Foto -->
+            <div class="photo-upload-container">
+                <div class="photo-preview" id="photo-preview">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Adjuntar Foto</span>
+                </div>
+                <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+            </div>
+            <!-- Otros campos que van a la izquierda -->
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <textarea id="direccion" rows="4" placeholder="Av. Principal, Edificio X, Piso Y, Apto Z, Ciudad, Estado..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="observaciones">Observaciones Generales</label>
+                <textarea id="observaciones" rows="4" placeholder="Alergias conocidas, condiciones preexistentes importantes, etc."></textarea>
+            </div>
+        </div>
+        <div class="form-column-right">
+            <h3 class="form-section-title">Información Personal</h3>
+            <div class="form-grid-2-cols">
+                <div class="form-group">
+                    <label for="nacionalidad">Nacionalidad *</label>
+                    <select id="nacionalidad" required>
+                        <option value="">Seleccione...</option>
+                        <option value="V">Venezolano</option>
+                        <option value="E">Extranjero</option>
+                        <option value="J">Jurídico</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="identificacion">Identificación (C.I./Pasaporte) *</label>
+                    <input type="text" id="identificacion" placeholder="V12345678" required>
+                </div>
+                <div class="form-group">
+                    <label for="fecha-historia">Fecha de Historia *</label>
+                    <input type="date" id="fecha-historia" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellidos">Apellidos *</label>
+                    <input type="text" id="apellidos" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombres">Nombres *</label>
+                    <input type="text" id="nombres" required>
+                </div>
+                <div class="form-group">
+                    <label for="fecha-nacimiento">Fecha de Nacimiento *</label>
+                    <input type="date" id="fecha-nacimiento" required>
+                </div>
+                <div class="form-group">
+                    <label>Edad Cronológica</label>
+                    <input type="text" id="edad-cronologica" disabled placeholder="Se calcula automáticamente">
+                </div>
+                <div class="form-group">
+                    <label for="genero">Género *</label>
+                    <select id="genero" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Masculino Deportivo">Masculino Deportivo</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Femenino Deportivo">Femenino Deportivo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lugar-nacimiento">Lugar de Nacimiento</label>
+                    <input type="text" id="lugar-nacimiento" placeholder="Ciudad, País">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" id="telefono" placeholder="+58 412 1234567">
+                </div>
+                <div class="form-group">
+                    <label for="estado-civil">Estado Civil</label>
+                    <select id="estado-civil">
+                        <option value="">Seleccione...</option>
+                        <option value="Soltero(a)">Soltero(a)</option>
+                        <option value="Casado(a)">Casado(a)</option>
+                        <option value="Comprometido(a)">Comprometido(a)</option>
+                        <option value="Viudo(a)">Viudo(a)</option>
+                        <option value="Relación">En una relación</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="profesion">Profesión</label>
+                    <input type="text" id="profesion">
+                </div>
+                <div class="form-group">
+                    <label for="pais-residencia">País de Residencia</label>
+                    <input type="text" id="pais-residencia">
+                </div>
+                 <div class="form-group">
+                    <label for="estado-provincia">Estado/Provincia Residencia</label>
+                    <input type="text" id="estado-provincia">
+                </div>
+                 <div class="form-group">
+                    <label for="ciudad">Ciudad</label>
+                    <input type="text" id="ciudad">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-section-divider">
+        <h3 class="form-section-title">Datos Complementarios (Sección Futura)</h3>
+    </div>
+    <!-- Espacio para futuros campos -->
+    <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="window.location.hash='#historias'">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar Historia</button>
+    </div>
+</form>

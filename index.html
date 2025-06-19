@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Antivejez - Prototipo</title>
+    
+    <!-- Estilos: Asegúrate de que la carpeta 'css' exista y contenga 'styles.css' -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Dependencias Externas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Layout Principal -->
+    <div class="app-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <!-- Asegúrate de tener la carpeta 'assets' con tu logo -->
+                <img src="assets/logo.png" alt="Logo Doctor Antivejez" class="logo">
+            </div>
+            <ul class="menu-list">
+                <li><a href="#dashboard" class="menu-item"><i class="fas fa-chart-line fa-fw"></i> <span>Dashboard</span></a></li>
+                <li><a href="#historias" class="menu-item"><i class="fas fa-book-medical fa-fw"></i> <span>Historias</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="https://i.pravatar.cc/40?u=dr-mendez" alt="Dr. Mendez">
+                    <div class="user-info">
+                        <span class="user-name">Dr. Juan C. Mendez</span>
+                        <span class="user-role">Médico</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="app-container">
+            <header class="app-header">
+                <button class="sidebar-toggle" id="sidebar-toggle-btn"><i class="fas fa-bars"></i></button>
+                <div class="header-search"><i class="fas fa-search"></i><input type="text" placeholder="Buscar..."></div>
+            </header>
+            <main id="app-root" class="main-content">
+                <!-- El contenido se cargará aquí. -->
+            </main>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <!-- ======================================================= -->
+    <!-- ORDEN DE SCRIPTS: Este orden es CRÍTICO para que todo funcione. -->
+    <!-- 1. api.js: Define el objeto 'api' (sin dependencias) -->
+    <!-- 2. historias.js, dashboard.js: Definen funciones de inicialización (dependen de 'api') -->
+    <!-- 3. router.js: Define el objeto 'router' (depende de las funciones de inicialización) -->
+    <!-- 4. main.js: Pone todo en marcha (depende de 'router') -->
+    <!-- ======================================================= -->
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/historias.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
