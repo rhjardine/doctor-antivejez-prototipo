@@ -1,436 +1,389 @@
-<div class="page-header">
-    <div>
-        <h1 class="page-title">
-            <i class="fas fa-user-plus"></i>
-            Registrar Nuevo Paciente
-        </h1>
-    </div>
-    <a href="#historias" class="btn btn-secondary" onclick="goToHistorias()">
-        <i class="fas fa-arrow-left"></i>
-        Volver a la Lista
-    </a>
-</div>
-
-<div class="form-container">
-    <!-- Header del formulario -->
+<div class="patient-form-container">
+    <!-- Header del Formulario -->
     <div class="form-header">
-        <div class="form-header-icon">
-            <i class="fas fa-user-plus"></i>
-        </div>
-        <div class="form-header-text">
-            <h1>Nueva Historia Clínica</h1>
-            <p>Complete la información del paciente</p>
-        </div>
-        <div style="margin-left: auto;">
-            <span style="
-                background: #4789ff; 
-                color: white; 
-                padding: 0.5rem 1rem; 
-                border-radius: 0.5rem; 
-                font-size: 0.875rem; 
-                font-weight: 500;
-            ">
-                <i class="fas fa-clipboard-list"></i>
-                Datos del Paciente
-            </span>
+        <div class="header-content">
+            <button class="back-button btn-secondary" onclick="router.navigate('historias')">
+                <i class="fas fa-arrow-left"></i> Volver a la Lista
+            </button>
+            <div class="header-title">
+                <h1>Nuevo Paciente</h1>
+                <p>Complete la información del paciente para crear su historia médica</p>
+            </div>
         </div>
     </div>
 
-    <form id="patient-form">
-        <!-- Sección de Foto -->
-        <div class="form-section">
-            <div class="section-header">
-                <i class="fas fa-camera"></i>
-                <h2>Foto del Paciente</h2>
-            </div>
-            
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Foto del Paciente</label>
-                    <div class="photo-upload">
-                        <div class="photo-preview">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="photo-upload-text">
-                            <h3>Adjuntar Foto</h3>
-                            <p>Haga clic o arrastre una imagen aquí<br>
-                            Formatos: JPG, PNG (máx. 5MB)</p>
-                        </div>
-                        <input type="file" id="foto-input" name="foto" accept="image/*" style="display: none;">
+    <!-- Formulario de Registro -->
+    <form id="patient-form" class="patient-registration-form">
+        <!-- Foto del Paciente -->
+        <div class="photo-upload-section">
+            <div class="photo-upload-container">
+                <div class="photo-preview" id="photo-preview">
+                    <div class="photo-placeholder">
+                        <i class="fas fa-user-plus"></i>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Sección de Información Personal -->
-        <div class="form-section">
-            <div class="section-header">
-                <i class="fas fa-user"></i>
-                <h2>Información Personal</h2>
-            </div>
-            
-            <div class="form-grid form-grid-3">
-                <div class="form-group">
-                    <label for="nacionalidad">Nacionalidad <span class="required">*</span></label>
-                    <select id="nacionalidad" name="nacionalidad" required>
-                        <option value="">Seleccione...</option>
-                        <option value="venezolano">Venezolano</option>
-                        <option value="extranjero">Extranjero</option>
-                        <option value="juridico">Jurídico</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="identificacion">Identificación (C.I/Pasaporte) <span class="required">*</span></label>
-                    <input type="text" id="identificacion" name="identificacion" placeholder="V-12431456" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="fecha-historia">Fecha de Historia <span class="required">*</span></label>
-                    <input type="date" id="fecha-historia" name="fechaHistoria" required>
-                </div>
-            </div>
-            
-            <div class="form-grid form-grid-2">
-                <div class="form-group">
-                    <label for="apellidos">Apellidos <span class="required">*</span></label>
-                    <input type="text" id="apellidos" name="apellidos" placeholder="Ingrese apellidos completos" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="nombres">Nombres <span class="required">*</span></label>
-                    <input type="text" id="nombres" name="nombres" placeholder="Ingrese nombres completos" required>
-                </div>
-            </div>
-            
-            <div class="form-grid form-grid-3">
-                <div class="form-group">
-                    <label for="fecha-nacimiento">Fecha de Nacimiento <span class="required">*</span></label>
-                    <input type="date" id="fecha-nacimiento" name="fechaNacimiento" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="edad-cronologica">Edad Cronológica</label>
-                    <input type="number" id="edad-cronologica" name="edadCronologica" placeholder="Se calcula automáticamente" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label for="genero">Género <span class="required">*</span></label>
-                    <select id="genero" name="genero" required>
-                        <option value="">Seleccione...</option>
-                        <option value="masculino">Masculino</option>
-                        <option value="masculino-deportivo">Masculino Deportivo</option>
-                        <option value="femenino">Femenino</option>
-                        <option value="femenino-deportivo">Femenino Deportivo</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-grid form-grid-2">
-                <div class="form-group">
-                    <label for="lugar-nacimiento">Lugar de Nacimiento</label>
-                    <input type="text" id="lugar-nacimiento" name="lugarNacimiento" placeholder="Ciudad, País">
-                </div>
-                
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" placeholder="+58 412 1234567">
-                </div>
-            </div>
-            
-            <div class="form-grid form-grid-2">
-                <div class="form-group">
-                    <label for="estado-civil">Estado Civil</label>
-                    <select id="estado-civil" name="estadoCivil">
-                        <option value="">Seleccione...</option>
-                        <option value="soltero">Soltero(a)</option>
-                        <option value="casado">Casado(a)</option>
-                        <option value="comprometido">Comprometido(a)</option>
-                        <option value="viudo">Viudo(a)</option>
-                        <option value="relacion">En Relación</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="profesion">Profesión</label>
-                    <input type="text" id="profesion" name="profesion" placeholder="Ej: Ingeniero de Software">
+                <div class="upload-controls">
+                    <label for="patient-photo" class="upload-button">
+                        <i class="fas fa-camera"></i>
+                        Adjuntar Foto
+                    </label>
+                    <input type="file" id="patient-photo" accept="image/*" style="display: none;">
+                    <p class="upload-hint">Haga clic o arrastre una imagen aquí<br>Formatos: JPG, PNG (máx. 5MB)</p>
                 </div>
             </div>
         </div>
 
-        <!-- Sección de Ubicación -->
+        <!-- Información Personal -->
         <div class="form-section">
             <div class="section-header">
-                <i class="fas fa-map-marker-alt"></i>
-                <h2>Información de Residencia</h2>
-            </div>
-            
-            <div class="form-grid form-grid-3">
-                <div class="form-group">
-                    <label for="pais-residencia">País de Residencia</label>
-                    <input type="text" id="pais-residencia" name="paisResidencia" placeholder="País actual de residencia">
-                </div>
-                
-                <div class="form-group">
-                    <label for="estado-residencia">Estado/Provincia Residencia</label>
-                    <input type="text" id="estado-residencia" name="estadoResidencia" placeholder="Estado o provincia actual">
-                </div>
-                
-                <div class="form-group">
-                    <label for="ciudad">Ciudad</label>
-                    <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad de residencia">
-                </div>
+                <h3><i class="fas fa-user"></i> Información Personal</h3>
             </div>
             
             <div class="form-grid">
+                <!-- Primera fila -->
                 <div class="form-group">
-                    <label for="direccion">Dirección</label>
-                    <textarea id="direccion" name="direccion" rows="3" 
-                             placeholder="Av. Principal, Edificio X, Piso Y, Apto Z, Ciudad, Estado"></textarea>
+                    <label for="nationality" class="required">Nacionalidad</label>
+                    <select id="nationality" name="nationality" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Venezolana">Venezolana</option>
+                        <option value="Colombiana">Colombiana</option>
+                        <option value="Ecuatoriana">Ecuatoriana</option>
+                        <option value="Peruana">Peruana</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Brasileña">Brasileña</option>
+                        <option value="Chilena">Chilena</option>
+                        <option value="Otra">Otra</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="identification" class="required">Identificación (C.I/Pasaporte)</label>
+                    <input type="text" id="identification" name="identification" placeholder="V-12431456" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registration-date" class="required">Fecha de Historia</label>
+                    <input type="date" id="registration-date" name="registrationDate" required>
+                </div>
+
+                <!-- Segunda fila -->
+                <div class="form-group">
+                    <label for="last-name" class="required">Apellidos</label>
+                    <input type="text" id="last-name" name="lastName" placeholder="Ingrese apellidos completos" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="first-name" class="required">Nombres</label>
+                    <input type="text" id="first-name" name="firstName" placeholder="Ingrese nombres completos" required>
+                </div>
+
+                <div class="form-group">
+                    <!-- Campo vacío para alineación -->
+                </div>
+
+                <!-- Tercera fila -->
+                <div class="form-group">
+                    <label for="birth-date" class="required">Fecha de Nacimiento</label>
+                    <input type="date" id="birth-date" name="birthDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="chronological-age">Edad Cronológica</label>
+                    <input type="number" id="chronological-age" name="chronologicalAge" placeholder="Se calcula automáticamente" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender" class="required">Género</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </div>
+
+                <!-- Cuarta fila -->
+                <div class="form-group">
+                    <label for="birth-place">Lugar de Nacimiento</label>
+                    <input type="text" id="birth-place" name="birthPlace" placeholder="Ciudad, País">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+58 412 1234567">
+                </div>
+
+                <div class="form-group">
+                    <!-- Campo vacío para alineación -->
+                </div>
+
+                <!-- Quinta fila -->
+                <div class="form-group">
+                    <label for="civil-status">Estado Civil</label>
+                    <select id="civil-status" name="civilStatus">
+                        <option value="">Seleccione...</option>
+                        <option value="Soltero/a">Soltero/a</option>
+                        <option value="Casado/a">Casado/a</option>
+                        <option value="Divorciado/a">Divorciado/a</option>
+                        <option value="Viudo/a">Viudo/a</option>
+                        <option value="Unión Libre">Unión Libre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="profession">Profesión</label>
+                    <input type="text" id="profession" name="profession" placeholder="Ej: Ingeniero de Software">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="ejemplo@correo.com">
                 </div>
             </div>
         </div>
 
-        <!-- Sección de Observaciones -->
+        <!-- Información de Residencia -->
         <div class="form-section">
             <div class="section-header">
-                <i class="fas fa-notes-medical"></i>
-                <h2>Observaciones Generales</h2>
+                <h3><i class="fas fa-home"></i> Información de Residencia</h3>
             </div>
             
             <div class="form-grid">
-                <div class="form-group">
-                    <label for="observaciones">Observaciones Generales</label>
-                    <textarea id="observaciones" name="observaciones" rows="4" 
-                             placeholder="Alergias conocidas, condiciones preexistentes importantes, medicamentos actuales, etc."></textarea>
+                <div class="form-group full-width">
+                    <label for="address">Dirección Completa</label>
+                    <textarea id="address" name="address" rows="3" placeholder="Ingrese la dirección completa de residencia"></textarea>
                 </div>
             </div>
         </div>
 
-        <!-- Sección de Contacto Adicional -->
+        <!-- Contacto de Emergencia -->
         <div class="form-section">
             <div class="section-header">
-                <i class="fas fa-envelope"></i>
-                <h2>Datos Complementarios</h2>
-            </div>
-            
-            <div class="form-grid form-grid-2">
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com">
-                </div>
-                
-                <div class="form-group">
-                    <label for="telefono-emergencia">Teléfono de Emergencia</label>
-                    <input type="tel" id="telefono-emergencia" name="telefonoEmergencia" placeholder="+58 412 1234567">
-                </div>
+                <h3><i class="fas fa-phone-alt"></i> Contacto de Emergencia</h3>
             </div>
             
             <div class="form-grid">
-                <div class="form-group">
-                    <label for="contacto-emergencia">Contacto de Emergencia</label>
-                    <input type="text" id="contacto-emergencia" name="contactoEmergencia" 
-                           placeholder="Nombre y relación del contacto de emergencia">
+                <div class="form-group full-width">
+                    <label for="emergency-contact">Nombre y relación del contacto de emergencia</label>
+                    <textarea id="emergency-contact" name="emergencyContact" rows="2" placeholder="Nombre completo, parentesco y teléfono de contacto"></textarea>
                 </div>
             </div>
         </div>
 
-        <!-- Botones de acción -->
+        <!-- Botones de Acción -->
         <div class="form-actions">
-            <button type="button" class="btn btn-secondary" onclick="goToHistorias()">
-                <i class="fas fa-times"></i>
-                Cancelar
+            <button type="button" class="btn btn-secondary" onclick="router.navigate('historias')">
+                <i class="fas fa-times"></i> Cancelar
             </button>
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i>
-                Guardar Historia
+                <i class="fas fa-save"></i> Guardar Historia
             </button>
         </div>
     </form>
-</div>'''
-
-with open('historias-nuevo.html', 'w', encoding='utf-8') as f:
-    f.write(nuevo_paciente_html)
-
-print("✅ Archivo historias-nuevo.html creado exitosamente")
-
-# Crear la página paciente-detalle.html
-paciente_detalle_html = '''<!-- PÁGINA DE DETALLE DEL PACIENTE -->
-<div class="page-header">
-    <div>
-        <button class="btn btn-secondary btn-back" onclick="goToHistorias()">
-            <i class="fas fa-arrow-left"></i>
-            Volver a la Lista
-        </button>
-    </div>
 </div>
 
-<!-- Header del paciente -->
-<div class="patient-header">
-    <div class="patient-header-content">
-        <div class="patient-header-avatar">
-            IR
-        </div>
-        <div class="patient-header-info">
-            <h1>Isabel Romero</h1>
-            <div class="patient-header-meta">
-                <span>Edad: 58 años</span>
-                <span>Género: Female</span>
-            </div>
-        </div>
-        <div class="patient-header-stats">
-            <div class="stat-item">
-                <h3>52.3</h3>
-                <p>Edad Biológica</p>
-            </div>
-            <div class="stat-item">
-                <h3 style="color: #2ecc71;">-5.7</h3>
-                <p>Tendencia</p>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+// Funcionalidad del formulario de pacientes
+class PatientForm {
+    constructor() {
+        this.form = document.getElementById('patient-form');
+        this.init();
+    }
 
-<!-- Contenedor de pestañas -->
-<div class="tabs-container">
-    <div class="tabs-header">
-        <button class="tab-btn active">
-            <i class="fas fa-file-medical"></i>
-            Historia Médica
-        </button>
-        <button class="tab-btn">
-            <i class="fas fa-heartbeat"></i>
-            Edad Biológica
-        </button>
-        <button class="tab-btn">
-            <i class="fas fa-user-md"></i>
-            Guía del Paciente
-        </button>
-        <button class="tab-btn">
-            <i class="fas fa-apple-alt"></i>
-            Alimentación Nutrigenómica
-        </button>
-    </div>
+    init() {
+        // Establecer fecha actual en el campo de fecha de historia
+        document.getElementById('registration-date').valueAsDate = new Date();
+        
+        // Calcular edad automáticamente cuando se cambie la fecha de nacimiento
+        document.getElementById('birth-date').addEventListener('change', () => {
+            this.calculateAge();
+        });
 
-    <!-- Contenido de la pestaña Historia Médica -->
-    <div class="tab-content" style="display: block;">
-        <div style="padding: 2rem; text-align: center; color: #6b7280;">
-            <i class="fas fa-file-medical" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-            <h3>Historia Médica</h3>
-            <p>Esta sección estará disponible en futuras versiones</p>
-        </div>
-    </div>
+        // Manejar subida de foto
+        document.getElementById('patient-photo').addEventListener('change', (e) => {
+            this.handlePhotoUpload(e);
+        });
 
-    <!-- Contenido de la pestaña Edad Biológica -->
-    <div class="tab-content" style="display: none;">
-        <div style="padding: 2rem;">
-            <h2 style="margin-bottom: 2rem; color: #2d3748;">
-                Edad Cronológica Vs Edad Biológica (Paciente Real: 58 años)
-            </h2>
+        // Manejar envío del formulario
+        this.form.addEventListener('submit', (e) => {
+            this.handleSubmit(e);
+        });
+
+        // Validación en tiempo real
+        this.initValidation();
+    }
+
+    calculateAge() {
+        const birthDate = new Date(document.getElementById('birth-date').value);
+        const today = new Date();
+        
+        if (birthDate && birthDate <= today) {
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
             
-            <!-- Grid de cards de edad biológica -->
-            <div class="edad-biologica-grid">
-                <div class="edad-card" onclick="openBiofisicoModal('patient-id')">
-                    <div class="edad-card-icon">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h3 class="edad-card-title">EDAD BIOFÍSICA</h3>
-                    <div class="edad-card-value">55</div>
-                    <div class="edad-card-unit">años</div>
-                </div>
-                
-                <div class="edad-card" onclick="openTestModal('bioquimico')">
-                    <div class="edad-card-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="edad-card-title">EDAD BIOQUÍMICA</h3>
-                    <div class="edad-card-value">53</div>
-                    <div class="edad-card-unit">años</div>
-                </div>
-                
-                <div class="edad-card" onclick="openTestModal('ortomolecular')">
-                    <div class="edad-card-icon">
-                        <i class="fas fa-dna"></i>
-                    </div>
-                    <h3 class="edad-card-title">EDAD ORTOMOLECULAR</h3>
-                    <div class="edad-card-value">50</div>
-                    <div class="edad-card-unit">años</div>
-                </div>
-                
-                <div class="edad-card" onclick="openTestModal('genomica')">
-                    <div class="edad-card-icon">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h3 class="edad-card-title">EDAD GENÓMICA</h3>
-                    <div class="edad-card-value">58</div>
-                    <div class="edad-card-unit">años</div>
-                </div>
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            document.getElementById('chronological-age').value = age;
+        } else {
+            document.getElementById('chronological-age').value = '';
+        }
+    }
+
+    handlePhotoUpload(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('photo-preview');
+        
+        if (file) {
+            // Validar tamaño del archivo (5MB máximo)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('El archivo es demasiado grande. Máximo 5MB permitido.');
+                return;
+            }
+
+            // Validar tipo de archivo
+            if (!file.type.startsWith('image/')) {
+                alert('Por favor seleccione un archivo de imagen válido.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Foto del paciente">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    initValidation() {
+        const requiredFields = this.form.querySelectorAll('[required]');
+        
+        requiredFields.forEach(field => {
+            field.addEventListener('blur', () => {
+                this.validateField(field);
+            });
+        });
+    }
+
+    validateField(field) {
+        const value = field.value.trim();
+        const fieldGroup = field.closest('.form-group');
+        
+        // Remover clases de validación anteriores
+        fieldGroup.classList.remove('field-valid', 'field-error');
+        
+        if (field.hasAttribute('required') && !value) {
+            fieldGroup.classList.add('field-error');
+            return false;
+        } else if (value) {
+            fieldGroup.classList.add('field-valid');
+        }
+        
+        // Validaciones específicas
+        if (field.type === 'email' && value) {
+            const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+            if (!emailRegex.test(value)) {
+                fieldGroup.classList.remove('field-valid');
+                fieldGroup.classList.add('field-error');
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    validateForm() {
+        const requiredFields = this.form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!this.validateField(field)) {
+                isValid = false;
+            }
+        });
+        
+        return isValid;
+    }
+
+    async handleSubmit(event) {
+        event.preventDefault();
+        
+        if (!this.validateForm()) {
+            this.showNotification('Por favor complete todos los campos requeridos', 'error');
+            return;
+        }
+
+        const formData = new FormData(this.form);
+        const patientData = {
+            identification: formData.get('identification'),
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            fullName: `${formData.get('firstName')} ${formData.get('lastName')}`,
+            birthDate: formData.get('birthDate'),
+            chronologicalAge: parseInt(formData.get('chronologicalAge')),
+            gender: formData.get('gender'),
+            nationality: formData.get('nationality'),
+            birthPlace: formData.get('birthPlace'),
+            phone: formData.get('phone'),
+            email: formData.get('email'),
+            profession: formData.get('profession'),
+            civilStatus: formData.get('civilStatus'),
+            address: formData.get('address'),
+            emergencyContact: formData.get('emergencyContact'),
+            registrationDate: formData.get('registrationDate')
+        };
+
+        try {
+            // Simular guardado en la base de datos
+            await this.savePatient(patientData);
+            
+            this.showNotification('Paciente guardado exitosamente', 'success');
+            
+            // Redirigir a la lista después de un momento
+            setTimeout(() => {
+                router.navigate('historias');
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Error al guardar paciente:', error);
+            this.showNotification('Error al guardar el paciente. Intente nuevamente.', 'error');
+        }
+    }
+
+    async savePatient(patientData) {
+        // Simular llamada a API
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log('Paciente guardado:', patientData);
+                resolve();
+            }, 1000);
+        });
+    }
+
+    showNotification(message, type) {
+        // Crear notificación temporal
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
             </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Remover después de 3 segundos
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+}
 
-            <!-- Sección adicional de perfil multidimensional -->
-            <div style="margin-top: 3rem;">
-                <h2 style="margin-bottom: 2rem; color: #2d3748;">
-                    Perfil Multidimensional de Envejecimiento
-                </h2>
-                
-                <div class="edad-biologica-grid">
-                    <div class="edad-card" style="background: linear-gradient(135deg, #8E44AD 0%, #9B59B6 100%);" onclick="openTestModal('hormonal')">
-                        <div class="edad-card-icon">
-                            <i class="fas fa-female"></i>
-                        </div>
-                        <h3 class="edad-card-title">PERFIL HORMONAL</h3>
-                        <div class="edad-card-value">--</div>
-                        <div class="edad-card-unit">pendiente</div>
-                    </div>
-                    
-                    <div class="edad-card" style="background: linear-gradient(135deg, #E67E22 0%, #F39C12 100%);" onclick="openTestModal('metabolico')">
-                        <div class="edad-card-icon">
-                            <i class="fas fa-fire"></i>
-                        </div>
-                        <h3 class="edad-card-title">ANÁLISIS METABÓLICO</h3>
-                        <div class="edad-card-value">--</div>
-                        <div class="edad-card-unit">pendiente</div>
-                    </div>
-                    
-                    <div class="edad-card" style="background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);" onclick="openTestModal('inmunologico')">
-                        <div class="edad-card-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3 class="edad-card-title">PERFIL INMUNOLÓGICO</h3>
-                        <div class="edad-card-value">--</div>
-                        <div class="edad-card-unit">pendiente</div>
-                    </div>
-                    
-                    <div class="edad-card" style="background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);" onclick="openTestModal('cardiovascular')">
-                        <div class="edad-card-icon">
-                            <i class="fas fa-heartbeat"></i>
-                        </div>
-                        <h3 class="edad-card-title">RIESGO CARDIOVASCULAR</h3>
-                        <div class="edad-card-value">--</div>
-                        <div class="edad-card-unit">pendiente</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contenido de la pestaña Guía del Paciente -->
-    <div class="tab-content" style="display: none;">
-        <div style="padding: 2rem; text-align: center; color: #6b7280;">
-            <i class="fas fa-user-md" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-            <h3>Guía del Paciente</h3>
-            <p>Recomendaciones personalizadas y plan de tratamiento</p>
-            <p style="margin-top: 1rem; font-style: italic;">Próximamente disponible</p>
-        </div>
-    </div>
-
-    <!-- Contenido de la pestaña Alimentación Nutrigenómica -->
-    <div class="tab-content" style="display: none;">
-        <div style="padding: 2rem; text-align: center; color: #6b7280;">
-            <i class="fas fa-apple-alt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-            <h3>Alimentación Nutrigenómica</h3>
-            <p>Plan nutricional basado en perfil genético</p>
-            <p style="margin-top: 1rem; font-style: italic;">Próximamente disponible</p>
-        </div>
-    </div>
-</div>
+// Inicializar cuando se cargue la página
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash.includes('historias-nuevo')) {
+        new PatientForm();
+    }
+});
+</script>

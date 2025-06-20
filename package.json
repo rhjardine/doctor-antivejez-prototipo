@@ -1,0 +1,77 @@
+
+{
+  "name": "doctor-antivejez",
+  "version": "1.0.0",
+  "description": "Sistema médico para cálculo de edad biológica y gestión de pacientes",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "node scripts/seed.js",
+    "db:reset": "prisma migrate reset",
+    "start": "node server.js",
+    "test": "jest",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "medicina",
+    "edad-biologica",
+    "biofisica",
+    "antienvejecimiento",
+    "prisma",
+    "sqlite"
+  ],
+  "author": "Doctor Antivejez Team",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.7.1",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "express-rate-limit": "^7.1.5",
+    "compression": "^1.7.4",
+    "dotenv": "^16.3.1",
+    "express-validator": "^7.0.1",
+    "morgan": "^1.10.0",
+    "date-fns": "^2.30.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.7.1",
+    "vite": "^5.0.8",
+    "@vitejs/plugin-legacy": "^5.2.0",
+    "terser": "^5.26.0",
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.6"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "node prisma/seed.js"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doctor-antivejez/medical-platform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/doctor-antivejez/medical-platform/issues"
+  },
+  "homepage": "https://doctor-antivejez.com"
+}

@@ -1,0 +1,177 @@
+
+<div class="patient-detail-container">
+    <!-- Botón de Volver -->
+    <div class="navigation-header">
+        <button class="back-button btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver a la Lista
+        </button>
+    </div>
+
+    <!-- Header del Paciente -->
+    <div class="patient-header">
+        <!-- Se llenará dinámicamente con JavaScript -->
+    </div>
+
+    <!-- Pestañas de Navegación -->
+    <div class="tabs-container">
+        <div class="tabs-navigation">
+            <button class="tab-button active" data-tab="historia">
+                <i class="fas fa-file-medical"></i>
+                Historia Médica
+            </button>
+            <button class="tab-button" data-tab="edad-biologica">
+                <i class="fas fa-heart"></i>
+                Edad Biológica
+            </button>
+            <button class="tab-button" data-tab="guia-paciente">
+                <i class="fas fa-user-md"></i>
+                Guía del Paciente
+            </button>
+            <button class="tab-button" data-tab="nutrigenomica">
+                <i class="fas fa-dna"></i>
+                Alimentación Nutrigenómica
+            </button>
+        </div>
+
+        <!-- Contenido de las Pestañas -->
+        <div class="tabs-content">
+            <!-- Pestaña Historia Médica -->
+            <div class="tab-content active" data-tab-content="historia">
+                <div class="tab-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3>Historia Médica</h3>
+                    <p>Esta sección estará disponible en futuras versiones</p>
+                </div>
+            </div>
+
+            <!-- Pestaña Edad Biológica -->
+            <div class="tab-content" data-tab-content="edad-biologica">
+                <div class="biological-age-content">
+                    <h3>Tests de Edad Biológica</h3>
+                    <p>Selecciona un test para comenzar la evaluación biológica del paciente</p>
+                    
+                    <!-- Tarjetas de Tests Biológicos -->
+                    <div class="test-cards-grid">
+                        <div class="test-card" data-test-type="biofisica">
+                            <div class="test-card-header">
+                                <div class="test-icon biofisica-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <h4>Test Biofísica</h4>
+                            </div>
+                            <div class="test-card-body">
+                                <p>Evaluación de parámetros físicos y funcionales</p>
+                                <div class="test-status">
+                                    <span class="status-badge pending">Pendiente</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="test-card" data-test-type="bioquimica">
+                            <div class="test-card-header">
+                                <div class="test-icon bioquimica-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <h4>Test Bioquímica</h4>
+                            </div>
+                            <div class="test-card-body">
+                                <p>Análisis de marcadores bioquímicos</p>
+                                <div class="test-status">
+                                    <span class="status-badge pending">Pendiente</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="test-card" data-test-type="ortomolecular">
+                            <div class="test-card-header">
+                                <div class="test-icon ortomolecular-icon">
+                                    <i class="fas fa-atom"></i>
+                                </div>
+                                <h4>Test Ortomolecular</h4>
+                            </div>
+                            <div class="test-card-body">
+                                <p>Evaluación de deficiencias nutricionales</p>
+                                <div class="test-status">
+                                    <span class="status-badge pending">Pendiente</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="test-card" data-test-type="genetico">
+                            <div class="test-card-header">
+                                <div class="test-icon genetico-icon">
+                                    <i class="fas fa-dna"></i>
+                                </div>
+                                <h4>Test Genético</h4>
+                            </div>
+                            <div class="test-card-body">
+                                <p>Análisis de predisposición genética</p>
+                                <div class="test-status">
+                                    <span class="status-badge pending">Pendiente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta del Perfil Multidimensional -->
+                    <div class="multidimensional-profile">
+                        <h3>Perfil Multidimensional del Paciente</h3>
+                        <div class="profile-card">
+                            <div class="profile-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="profile-content">
+                                <h4>Análisis Integral</h4>
+                                <p>Vista consolidada de todos los tests realizados</p>
+                                <button class="btn btn-outline-primary">
+                                    <i class="fas fa-chart-line"></i>
+                                    Ver Perfil Completo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pestaña Guía del Paciente -->
+            <div class="tab-content" data-tab-content="guia-paciente">
+                <div class="tab-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Guía del Paciente</h3>
+                    <p>Esta sección estará disponible en futuras versiones</p>
+                </div>
+            </div>
+
+            <!-- Pestaña Alimentación Nutrigenómica -->
+            <div class="tab-content" data-tab-content="nutrigenomica">
+                <div class="tab-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <h3>Alimentación Nutrigenómica</h3>
+                    <p>Esta sección estará disponible en futuras versiones</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal del Test Biofísico -->
+<div id="biophysics-modal" class="modal">
+    <div class="modal-content biophysics-modal-content">
+        <div class="modal-header">
+            <h3>Test de Edad Biofísica</h3>
+            <span class="close" onclick="document.getElementById('biophysics-modal').style.display='none'">&times;</span>
+        </div>
+        <div class="modal-body">
+            <!-- Se cargará dinámicamente el formulario del test biofísico -->
+            <div id="biophysics-form-container">
+                <!-- El contenido se cargará con JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>

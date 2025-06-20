@@ -1,39 +1,345 @@
-<div class="page-header">
-    <div> <h1 class="page-title">Gestión de Pacientes</h1>
-        <p id="patient-count-subtitle" class="page-subtitle">Cargando...</p> </div>
-    <a href="#historias/nuevo" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Paciente</a>
-</div>
+<div class="patient-management-container">
+    <!-- Header de la Gestión de Pacientes -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-info">
+                <div class="header-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="header-text">
+                    <h1>Gestión de Pacientes</h1>
+                    <p id="patient-count">0 pacientes registrados</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="router.navigate('historias-nuevo')">
+                    <i class="fas fa-plus"></i> Nuevo Paciente
+                </button>
+            </div>
+        </div>
+    </div>
 
-<!-- Barra de búsqueda y filtros -->
-<div class="card" style="margin-bottom: 20px;">
-    <input type="text" id="patient-search" placeholder="Buscar por nombre, apellido, cédula o email..." style="width: 100%; padding: 12px;">
-</div>
+    <!-- Barra de Búsqueda -->
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="patient-search" placeholder="Buscar por nombre, apellido, cédula o email..." />
+        </div>
+        <div class="search-filters">
+            <select id="gender-filter" class="form-select">
+                <option value="">Todos los géneros</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+            </select>
+            <select id="professional-filter" class="form-select">
+                <option value="">Todos los profesionales</option>
+                <option value="Dr. Juan C. Mendez">Dr. Juan C. Mendez</option>
+            </select>
+        </div>
+    </div>
 
-<!-- Alerta de error (inicialmente oculta) -->
-<div id="error-alert" class="alert alert-danger" style="display: none;">
-    <i class="fas fa-exclamation-triangle"></i>
-    <span>Error al cargar pacientes: Internal Server Error</span>
-</div>
+    <!-- Tabla de Pacientes -->
+    <div class="patients-table-container">
+        <table class="patients-table">
+            <thead>
+                <tr>
+                    <th>PACIENTE</th>
+                    <th>IDENTIFICACIÓN</th>
+                    <th>EDAD</th>
+                    <th>PROFESIONAL</th>
+                    <th>CONTACTO</th>
+                    <th>FECHA REGISTRO</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody id="patients-table-body">
+                <!-- Los datos se cargarán dinámicamente -->
+            </tbody>
+        </table>
+    </div>
 
-<!-- Contenedor de la tabla -->
-<div class="table-container">
-    <table class="patients-table">
-        <thead>
-            <tr>
-                <th>Paciente</th>
-                <th>Identificación</th>
-                <th>Edad</th>
-                <th>Contacto</th>
-                <th>Fecha Registro</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="patients-table-body">
-            <!-- Las filas se insertarán aquí con JavaScript -->
-        </tbody>
-    </table>
-    <div id="no-patients-message" style="text-align: center; padding: 40px; display: none;">
-        <i class="fas fa-user-friends" style="font-size: 3rem; color: var(--grey-dark); margin-bottom: 15px;"></i>
-        <p>No hay pacientes registrados</p>
+    <!-- Paginación -->
+    <div class="pagination-container">
+        <div class="pagination-info">
+            <span id="pagination-info">Mostrando 0 de 0 pacientes</span>
+        </div>
+        <div class="pagination-controls">
+            <button class="btn btn-outline-secondary" id="prev-page" disabled>
+                <i class="fas fa-chevron-left"></i> Anterior
+            </button>
+            <span class="page-numbers" id="page-numbers">
+                <!-- Se generará dinámicamente -->
+            </span>
+            <button class="btn btn-outline-secondary" id="next-page" disabled>
+                Siguiente <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
     </div>
 </div>
+
+<!-- Modal de Confirmación de Eliminación -->
+<div id="delete-confirmation-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Confirmar Eliminación</h3>
+            <span class="close" onclick="closeDeleteModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="confirmation-content">
+                <div class="warning-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <p>¿Estás seguro de que deseas eliminar este paciente?</p>
+                <p class="warning-text">Esta acción no se puede deshacer.</p>
+                <div class="patient-info" id="delete-patient-info">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+            <button class="btn btn-danger" id="confirm-delete-btn">
+                <i class="fas fa-trash"></i> Eliminar Paciente
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Gestión de pacientes - Funcionalidad de la tabla
+class PatientManager {
+    constructor() {
+        this.patients = [
+            {
+                id: 1,
+                name: "Richard Hans Jardine Romero",
+                identification: "V-12431453",
+                age: 50,
+                gender: "Masculino",
+                phone: "+584142809270",
+                email: "rhjardine@gmail.com",
+                professional: "Dr. Juan C. Mendez",
+                registrationDate: "2025-06-12",
+                avatar: "RJ"
+            },
+            {
+                id: 2,
+                name: "Aníbal Gerardo Freites Flores",
+                identification: "V-10811971",
+                age: 52,
+                gender: "Masculino",
+                phone: "+584141234567",
+                email: "afestetica@gmail.com",
+                professional: "Dr. Juan C. Mendez",
+                registrationDate: "2025-06-12",
+                avatar: "AF"
+            }
+        ];
+        
+        this.filteredPatients = [...this.patients];
+        this.currentPage = 1;
+        this.patientsPerPage = 10;
+        
+        this.init();
+    }
+
+    init() {
+        this.renderPatients();
+        this.initSearch();
+        this.initFilters();
+        this.updatePatientCount();
+    }
+
+    renderPatients() {
+        const tbody = document.getElementById('patients-table-body');
+        const startIndex = (this.currentPage - 1) * this.patientsPerPage;
+        const endIndex = startIndex + this.patientsPerPage;
+        const patientsToShow = this.filteredPatients.slice(startIndex, endIndex);
+
+        tbody.innerHTML = '';
+
+        if (patientsToShow.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="no-patients">
+                        <div class="no-patients-message">
+                            <i class="fas fa-user-plus"></i>
+                            <p>No se encontraron pacientes</p>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        patientsToShow.forEach(patient => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="patient-info">
+                    <div class="patient-avatar-info">
+                        <div class="patient-avatar-small">
+                            <span class="avatar-initials">${patient.avatar}</span>
+                        </div>
+                        <div class="patient-name-info">
+                            <div class="patient-name">${patient.name}</div>
+                            <div class="patient-gender">${patient.gender}</div>
+                        </div>
+                    </div>
+                </td>
+                <td class="identification">${patient.identification}</td>
+                <td class="age">${patient.age} años</td>
+                <td class="professional">${patient.professional}</td>
+                <td class="contact">
+                    <div class="contact-info">
+                        <div class="phone">${patient.phone}</div>
+                        <div class="email">${patient.email}</div>
+                    </div>
+                </td>
+                <td class="registration-date">${this.formatDate(patient.registrationDate)}</td>
+                <td class="actions">
+                    <div class="action-buttons">
+                        <button class="btn-action btn-view" onclick="viewPatient(${patient.id})" title="Ver Paciente">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-action btn-edit" onclick="editPatient(${patient.id})" title="Editar Paciente">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-action btn-delete" onclick="deletePatient(${patient.id})" title="Eliminar Paciente">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        this.updatePagination();
+    }
+
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES');
+    }
+
+    initSearch() {
+        const searchInput = document.getElementById('patient-search');
+        searchInput.addEventListener('input', (e) => {
+            this.filterPatients();
+        });
+    }
+
+    initFilters() {
+        const genderFilter = document.getElementById('gender-filter');
+        const professionalFilter = document.getElementById('professional-filter');
+
+        genderFilter.addEventListener('change', () => this.filterPatients());
+        professionalFilter.addEventListener('change', () => this.filterPatients());
+    }
+
+    filterPatients() {
+        const searchTerm = document.getElementById('patient-search').value.toLowerCase();
+        const genderFilter = document.getElementById('gender-filter').value;
+        const professionalFilter = document.getElementById('professional-filter').value;
+
+        this.filteredPatients = this.patients.filter(patient => {
+            const matchesSearch = 
+                patient.name.toLowerCase().includes(searchTerm) ||
+                patient.identification.toLowerCase().includes(searchTerm) ||
+                patient.email.toLowerCase().includes(searchTerm);
+
+            const matchesGender = !genderFilter || patient.gender === genderFilter;
+            const matchesProfessional = !professionalFilter || patient.professional === professionalFilter;
+
+            return matchesSearch && matchesGender && matchesProfessional;
+        });
+
+        this.currentPage = 1;
+        this.renderPatients();
+        this.updatePatientCount();
+    }
+
+    updatePatientCount() {
+        const countElement = document.getElementById('patient-count');
+        countElement.textContent = `${this.filteredPatients.length} pacientes registrados`;
+        
+        const paginationInfo = document.getElementById('pagination-info');
+        const startIndex = (this.currentPage - 1) * this.patientsPerPage + 1;
+        const endIndex = Math.min(startIndex + this.patientsPerPage - 1, this.filteredPatients.length);
+        paginationInfo.textContent = `Mostrando ${startIndex}-${endIndex} de ${this.filteredPatients.length} pacientes`;
+    }
+
+    updatePagination() {
+        const totalPages = Math.ceil(this.filteredPatients.length / this.patientsPerPage);
+        const prevBtn = document.getElementById('prev-page');
+        const nextBtn = document.getElementById('next-page');
+        const pageNumbers = document.getElementById('page-numbers');
+
+        prevBtn.disabled = this.currentPage === 1;
+        nextBtn.disabled = this.currentPage === totalPages || totalPages === 0;
+
+        // Generar números de página
+        pageNumbers.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            const pageBtn = document.createElement('button');
+            pageBtn.className = `page-btn ${i === this.currentPage ? 'active' : ''}`;
+            pageBtn.textContent = i;
+            pageBtn.onclick = () => this.goToPage(i);
+            pageNumbers.appendChild(pageBtn);
+        }
+
+        prevBtn.onclick = () => this.goToPage(this.currentPage - 1);
+        nextBtn.onclick = () => this.goToPage(this.currentPage + 1);
+    }
+
+    goToPage(page) {
+        this.currentPage = page;
+        this.renderPatients();
+    }
+}
+
+// Funciones globales para los botones de acción
+function viewPatient(id) {
+    console.log('Navegando a detalle del paciente:', id);
+    router.navigate(`historias/${id}`);
+}
+
+function editPatient(id) {
+    console.log('Editando paciente:', id);
+    router.navigate(`historias/${id}`);
+}
+
+function deletePatient(id) {
+    const patient = window.patientManager.patients.find(p => p.id === id);
+    if (patient) {
+        document.getElementById('delete-patient-info').innerHTML = `
+            <strong>${patient.name}</strong><br>
+            ${patient.identification}
+        `;
+        document.getElementById('delete-confirmation-modal').style.display = 'block';
+        
+        document.getElementById('confirm-delete-btn').onclick = () => {
+            console.log('Eliminando paciente:', id);
+            window.patientManager.patients = window.patientManager.patients.filter(p => p.id !== id);
+            window.patientManager.filterPatients();
+            closeDeleteModal();
+            showNotification('Paciente eliminado exitosamente', 'success');
+        };
+    }
+}
+
+function closeDeleteModal() {
+    document.getElementById('delete-confirmation-modal').style.display = 'none';
+}
+
+function showNotification(message, type) {
+    // Implementar sistema de notificaciones
+    console.log(`${type.toUpperCase()}: ${message}`);
+}
+
+// Inicializar cuando se cargue la página
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash.includes('historias') && !window.location.hash.includes('historias/')) {
+        window.patientManager = new PatientManager();
+    }
+});
+</script>

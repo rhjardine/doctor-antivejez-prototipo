@@ -1,308 +1,264 @@
 class Router {
     constructor() {
-        this.routes = {
-            'dashboard': 'pages/dashboard.html',
-            'historias': 'pages/historias-lista.html',
-            'historias-nuevo': 'pages/historias-nuevo.html',
-            'historias-detalle': 'pages/paciente-detalle.html',
-            'profesionales': 'pages/profesionales.html',
-            'agente-ia': 'pages/agente-ia.html',
-            'reportes': 'pages/reportes.html',
-            'ajustes': 'pages/ajustes.html'
-        };
-        
+        this.routes = {};
         this.currentRoute = null;
-        this.currentPatientId = null;
         this.init();
     }
 
     init() {
-        // Escuchar cambios en el hash
-        window.addEventListener('hashchange', () => this.handleHashChange());
-        
-        // Manejar carga inicial
-        this.handleHashChange();
-        
-        // Escuchar clics en los enlaces de navegación
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('[data-route]');
-            if (link) {
-                e.preventDefault();
-                const route = link.getAttribute('data-route');
-                this.navigate(route);
-            }
-        });
-
-        console.log('🚀 Router inicializado correctamente');
+        window.addEventListener('load', () => this.handleRoute());
+        window.addEventListener('hashchange', () => this.handleRoute());
+        window.addEventListener('popstate', () => this.handleRoute());
     }
 
-    handleHashChange() {
-        const hash = window.location.hash.slice(1); // Remover el #
-        
-        if (!hash) {
-            this.navigate('dashboard');
-            return;
-        }
-
-        // Parsear la ruta para extraer parámetros
-        const [route, ...params] = hash.split('/');
-        
-        if (route === 'historias' && params[0]) {
-            // Ruta del tipo #historias/123
-            this.currentPatientId = params[0];
-            this.loadRoute('historias-detalle');
-        } else {
-            this.loadRoute(route);
-        }
+    addRoute(path, handler) {
+        this.routes[path] = handler;
     }
 
-    navigate(route, params = null) {
-        if (params) {
-            window.location.hash = `${route}/${params}`;
-        } else {
-            window.location.hash = route;
-        }
-        
-        this.updateActiveNavLink(route);
+    navigate(path) {
+        window.location.hash = path;
+        this.handleRoute();
     }
 
-    async loadRoute(route) {
-        try {
-            const appRoot = document.getElementById('app-root');
-            
-            if (!appRoot) {
-                console.error('❌ No se encontró el elemento #app-root');
+    handleRoute() {
+        const hash = window.location.hash.slice(1) || 'dashboard';
+        console.log('Navegando a:', hash);
+        
+        // Manejar rutas dinámicas para pacientes
+        if (hash.startsWith('historias/')) {
+            const segments = hash.split('/');
+            if (segments.length === 2) {
+                // Ruta: historias/[id] - Vista de detalle del paciente
+                const patientId = segments[1];
+                this.loadPatientDetail(patientId);
                 return;
             }
+        }
+        
+        // Rutas estáticas
+        if (this.routes[hash]) {
+            this.currentRoute = hash;
+            this.routes[hash]();
+        } else {
+            console.warn(`Ruta no encontrada: ${hash}`);
+            this.navigate('dashboard');
+        }
+    }
 
-            // Mostrar loading
-            this.showLoading();
-
-            // Verificar si la ruta existe
-            if (!this.routes[route]) {
-                console.warn(`⚠️ Ruta no encontrada: ${route}, cargando dashboard`);
-                route = 'dashboard';
-            }
-
-            const filePath = this.routes[route];
+    async loadPatientDetail(patientId) {
+        try {
+            console.log('Cargando detalle del paciente:', patientId);
             
-            // Hacer fetch del contenido HTML
-            const response = await fetch(filePath);
-            
+            // Cargar la plantilla del detalle del paciente
+            const response = await fetch('pages/paciente-detalle.html');
             if (!response.ok) {
                 throw new Error(`Error ${response.status}: ${response.statusText}`);
             }
-
+            
             const html = await response.text();
+            document.getElementById('main-content').innerHTML = html;
             
-            // Inyectar el contenido
-            appRoot.innerHTML = html;
+            // Cargar los datos del paciente
+            await this.loadPatientData(patientId);
             
-            // Actualizar la ruta actual
-            this.currentRoute = route;
+            // Inicializar la funcionalidad del detalle del paciente
+            this.initPatientDetail(patientId);
             
-            // Ejecutar scripts específicos de la página
-            this.executePageScripts(route);
-            
-            // Actualizar navegación activa
-            this.updateActiveNavLink(route);
-
-            console.log(`✅ Ruta cargada exitosamente: ${route}`);
-
         } catch (error) {
-            console.error('❌ Error al cargar la ruta:', error);
-            this.showError(`Error al cargar la página: ${error.message}`);
+            console.error('Error al cargar detalle del paciente:', error);
+            this.showError('Error al cargar los datos del paciente');
         }
     }
 
-    showLoading() {
-        const appRoot = document.getElementById('app-root');
-        appRoot.innerHTML = `
-            <div class="loading-container">
-                <div class="loading-spinner"></div>
-                <p>Cargando...</p>
-            </div>
-        `;
+    async loadPatientData(patientId) {
+        try {
+            // Simular carga de datos del paciente desde la API
+            const patient = await this.getPatientById(patientId);
+            
+            if (!patient) {
+                throw new Error('Paciente no encontrado');
+            }
+            
+            // Actualizar la interfaz con los datos del paciente
+            this.updatePatientInterface(patient);
+            
+        } catch (error) {
+            console.error('Error al cargar datos del paciente:', error);
+            throw error;
+        }
+    }
+
+    async getPatientById(id) {
+        // Simular base de datos de pacientes
+        const patients = [
+            {
+                id: 1,
+                name: "Richard Hans Jardine Romero",
+                identification: "V-12431453",
+                age: 50,
+                gender: "Masculino",
+                phone: "+584142809270",
+                email: "rhjardine@gmail.com",
+                registrationDate: "12/6/2025",
+                avatar: "RJ",
+                chronologicalAge: 50,
+                biologicalAge: null,
+                differentialAge: null
+            },
+            {
+                id: 2,
+                name: "Aníbal Gerardo Freites Flores",
+                identification: "V-10811971",
+                age: 52,
+                gender: "Masculino",
+                phone: "+584141234567",
+                email: "afestetica@gmail.com",
+                registrationDate: "12/6/2025",
+                avatar: "AF",
+                chronologicalAge: 52,
+                biologicalAge: null,
+                differentialAge: null
+            }
+        ];
+        
+        return patients.find(p => p.id === parseInt(id));
+    }
+
+    updatePatientInterface(patient) {
+        // Actualizar el header del paciente
+        const patientHeader = document.querySelector('.patient-header');
+        if (patientHeader) {
+            patientHeader.innerHTML = `
+                <div class="patient-info-card">
+                    <div class="patient-avatar">
+                        <span class="avatar-initials">${patient.avatar}</span>
+                    </div>
+                    <div class="patient-details">
+                        <h2 class="patient-name">${patient.name}</h2>
+                        <div class="patient-meta">
+                            <span class="age">Edad: ${patient.age} años</span>
+                            <span class="gender">Género: ${patient.gender}</span>
+                        </div>
+                    </div>
+                    <div class="biological-age-display">
+                        <div class="bio-age-value">${patient.biologicalAge || '--'}</div>
+                        <div class="bio-age-label">Edad Biológica</div>
+                        <div class="age-tendency">${patient.differentialAge ? (patient.differentialAge > 0 ? 'Tendencia' : 'Tendencia') : '--'}</div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    initPatientDetail(patientId) {
+        // Inicializar las pestañas de navegación
+        this.initTabs();
+        
+        // Inicializar los botones de las tarjetas de tests
+        this.initTestCards(patientId);
+        
+        // Manejar el botón de volver
+        const backButton = document.querySelector('.back-button');
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                this.navigate('historias');
+            });
+        }
+    }
+
+    initTabs() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                
+                // Remover clase activa de todas las pestañas
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Activar la pestaña seleccionada
+                button.classList.add('active');
+                const targetContent = document.querySelector(`[data-tab-content="${targetTab}"]`);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+    }
+
+    initTestCards(patientId) {
+        // Inicializar las tarjetas de tests
+        const testCards = document.querySelectorAll('.test-card');
+        
+        testCards.forEach(card => {
+            const testType = card.getAttribute('data-test-type');
+            card.addEventListener('click', () => {
+                this.openTestModal(testType, patientId);
+            });
+        });
+    }
+
+    openTestModal(testType, patientId) {
+        switch(testType) {
+            case 'biofisica':
+                this.openBiophysicsTest(patientId);
+                break;
+            case 'bioquimica':
+                this.openBiochemistryTest(patientId);
+                break;
+            case 'ortomolecular':
+                this.openOrtomolecularTest(patientId);
+                break;
+            case 'genetico':
+                this.openGeneticTest(patientId);
+                break;
+        }
+    }
+
+    openBiophysicsTest(patientId) {
+        // Abrir el modal del test biofísico
+        const modal = document.getElementById('biophysics-modal');
+        if (modal) {
+            modal.style.display = 'block';
+            
+            // Inicializar el formulario del test biofísico
+            if (window.BiophysicsTest) {
+                window.BiophysicsTest.init(patientId);
+            }
+        }
+    }
+
+    openBiochemistryTest(patientId) {
+        console.log('Abriendo test bioquímico para paciente:', patientId);
+        // Implementar en futuras versiones
+    }
+
+    openOrtomolecularTest(patientId) {
+        console.log('Abriendo test ortomolecular para paciente:', patientId);
+        // Implementar en futuras versiones
+    }
+
+    openGeneticTest(patientId) {
+        console.log('Abriendo test genético para paciente:', patientId);
+        // Implementar en futuras versiones
     }
 
     showError(message) {
-        const appRoot = document.getElementById('app-root');
-        appRoot.innerHTML = `
-            <div class="error-container" style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 400px;
-                padding: 2rem;
-                text-align: center;
-            ">
-                <div style="
-                    width: 80px;
-                    height: 80px;
-                    background: #e74c3c;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-bottom: 1.5rem;
-                ">
-                    <i class="fas fa-exclamation-triangle" style="color: white; font-size: 2rem;"></i>
-                </div>
-                <h2 style="color: #e74c3c; margin-bottom: 1rem;">Error de Carga</h2>
-                <p style="color: #6b7280; margin-bottom: 1.5rem;">${message}</p>
-                <button onclick="location.reload()" style="
-                    padding: 0.75rem 1.5rem;
-                    background: #4789ff;
-                    color: white;
-                    border: none;
-                    border-radius: 0.5rem;
-                    cursor: pointer;
-                    font-size: 1rem;
-                ">
-                    <i class="fas fa-redo"></i> Recargar Página
+        const errorHtml = `
+            <div class="error-container">
+                <div class="error-icon">⚠️</div>
+                <h2>Error de Carga</h2>
+                <p>${message}</p>
+                <button onclick="window.location.reload()" class="btn btn-primary">
+                    🔄 Recargar Página
                 </button>
             </div>
         `;
-    }
-
-    executePageScripts(route) {
-        try {
-            switch (route) {
-                case 'dashboard':
-                    if (typeof initDashboard === 'function') {
-                        initDashboard();
-                    }
-                    break;
-                case 'historias':
-                    if (typeof initHistoriasList === 'function') {
-                        initHistoriasList();
-                    }
-                    break;
-                case 'historias-nuevo':
-                    if (typeof initNuevoHistoria === 'function') {
-                        initNuevoHistoria();
-                    }
-                    break;
-                case 'historias-detalle':
-                    if (typeof initPacienteDetalle === 'function') {
-                        initPacienteDetalle(this.currentPatientId);
-                    }
-                    break;
-                default:
-                    console.log(`ℹ️ No hay scripts específicos para la ruta: ${route}`);
-            }
-        } catch (error) {
-            console.error('❌ Error al ejecutar scripts de página:', error);
-        }
-    }
-
-    updateActiveNavLink(route) {
-        try {
-            // Remover clase active de todos los enlaces
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => link.classList.remove('active'));
-
-            // Agregar clase active al enlace correspondiente
-            const activeLink = document.querySelector(`[data-route="${route}"]`) || 
-                               document.querySelector(`[data-route="historias"]`);
-            
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-        } catch (error) {
-            console.error('❌ Error al actualizar navegación activa:', error);
-        }
-    }
-
-    // Métodos públicos para navegación programática
-    goToDashboard() {
-        this.navigate('dashboard');
-    }
-
-    goToHistorias() {
-        this.navigate('historias');
-    }
-
-    goToNuevoHistoria() {
-        this.navigate('historias-nuevo');
-    }
-
-    goToPacienteDetalle(pacienteId) {
-        this.navigate('historias', pacienteId);
-    }
-
-    goBack() {
-        window.history.back();
-    }
-
-    getCurrentRoute() {
-        return this.currentRoute;
-    }
-
-    getCurrentPatientId() {
-        return this.currentPatientId;
+        document.getElementById('main-content').innerHTML = errorHtml;
     }
 }
 
-// Función para crear y exportar la instancia del router
-function createRouter() {
-    if (typeof window !== 'undefined') {
-        return new Router();
-    }
-    return null;
-}
-
-// Funciones de utilidad para la navegación
-function navigateTo(route, params = null) {
-    if (window.router) {
-        window.router.navigate(route, params);
-    } else {
-        console.error('❌ Router no está inicializado');
-    }
-}
-
-function goToDashboard() {
-    navigateTo('dashboard');
-}
-
-function goToHistorias() {
-    navigateTo('historias');
-}
-
-function goToNuevoHistoria() {
-    navigateTo('historias-nuevo');
-}
-
-function goToPacienteDetalle(pacienteId) {
-    navigateTo('historias', pacienteId);
-}
-
-function goBack() {
-    if (window.router) {
-        window.router.goBack();
-    } else {
-        window.history.back();
-    }
-}
-
-// Función para recargar la página actual
-function reloadCurrentPage() {
-    if (window.router && window.router.currentRoute) {
-        window.router.loadRoute(window.router.currentRoute);
-    }
-}
-
-// Función para obtener parámetros de la URL
-function getRouteParams() {
-    const hash = window.location.hash.slice(1);
-    const [route, ...params] = hash.split('/');
-    return { route, params };
-}
-
-// Función para verificar si estamos en una ruta específica
-function isCurrentRoute(route) {
-    return window.router && window.router.getCurrentRoute() === route;
-}
-
-console.log('📝 Router.js cargado correctamente');
+// Instancia global del router
+window.router = new Router();
