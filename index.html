@@ -1,5 +1,4 @@
-# Crear el archivo index.html principal (layout persistente)
-html_content = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -86,166 +85,141 @@ html_content = '''<!DOCTYPE html>
             <div class="sidebar-footer">
                 <div class="doctor-info">
                     <div class="doctor-avatar">
-                        <img src="assets/doctor-avatar.png" alt="Dr." onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMyRUNDNzEiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSI4IiB5PSI4Ij4KPHBhdGggZD0iTTEyIDEyQzE0LjIwOTEgMTIgMTYgMTAuMjA5MSAxNiA4QzE2IDUuNzkwODYgMTQuMjA5MSA0IDEyIDRDOS43OTA4NiA0IDggNS43OTA4NiA4IDhDOCAxMC4yMDkxIDkuNzkwODYgMTIgMTIgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTIgMTRDOC4xMzQwMSAxNCA1IDE3LjEzNCA1IDIxSDMuMDAzVjE5QzMuMDAzIDE1LjY4NiA1LjY4NiAxMyA5IDEzSDEyIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4KPC9zdmc+'">
+                        <img src="assets/doctor-avatar.png" alt="Dr." onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiM0Nzg5RkYiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSI4IiB5PSI4Ij4KPHBhdGggZD0iTTEyIDEyQzE0LjIwOTEgMTIgMTYgMTAuMjA5MSAxNiA4QzE2IDUuNzkwODYgMTQuMjA5MSA0IDEyIDRDOS43OTA4NiA0IDggNS43OTA4NiA4IDhDOCAxMC4yMDkxIDkuNzkwODYgMTIgMTIgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTIgMTRDOC4xMzQwMSAxNCA1IDE3LjEzNCA1IDIxSDMuMDAzVjE5QzMuMDAzIDE1LjY4NiA1LjY4NiAxMyA5IDEzSDEyIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4KPC9zdmc+'">
                     </div>
                     <div class="doctor-details">
-                        <h4>Dr. Juan C. Mendez</h4>
-                        <p>Médico Antienvejecimiento</p>
+                        <span class="doctor-name">Dr. Antivejez</span>
+                        <span class="doctor-specialty">Medicina Antienvejecimiento</span>
                     </div>
                 </div>
-                <button class="logout-btn" title="Salir">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
             </div>
         </nav>
 
-        <!-- Área de contenido dinámico -->
-        <main id="app-root" class="main-content">
-            <!-- El contenido se carga aquí dinámicamente -->
-            <div class="loading-container">
-                <div class="loading-spinner"></div>
-                <p>Cargando...</p>
-            </div>
+        <!-- Contenido principal -->
+        <main class="main-content" id="main-content">
+            <!-- El contenido se carga dinámicamente aquí -->
         </main>
     </div>
 
-    <!-- Toast notifications -->
-    <div id="toast-container" class="toast-container"></div>
-
     <!-- Modal para Test Biofísico -->
     <div id="biofisico-modal" class="modal">
-        <div class="modal-content biofisico-modal-content">
+        <div class="modal-content modal-xl">
             <div class="modal-header">
-                <h2>Test Biofísico</h2>
-                <button class="modal-close" onclick="closeBiofisicoModal()">
+                <h2><i class="fas fa-calculator"></i> Test de Edad Biofísica</h2>
+                <button type="button" class="close-btn" onclick="closeBiofisicoModal()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="biofisico-container">
-                    <div class="biofisico-form">
-                        <form id="biofisico-form">
-                            <!-- Género -->
-                            <div class="form-group">
-                                <label for="genero">Género *</label>
-                                <select id="genero" name="genero" required>
-                                    <option value="">Seleccione...</option>
-                                    <option value="masculino">Masculino</option>
-                                    <option value="masculino-deportivo">Masculino Deportivo</option>
-                                    <option value="femenino">Femenino</option>
-                                    <option value="femenino-deportivo">Femenino Deportivo</option>
-                                </select>
-                            </div>
-
-                            <!-- % Grasa -->
-                            <div class="form-group">
-                                <label>% Grasa</label>
-                                <div class="dual-input">
-                                    <input type="number" id="grasa-valor" placeholder="Valor" step="0.1">
-                                    <input type="text" id="grasa-calculada" placeholder="Edad Calculada" readonly>
+                <div class="test-biofisico-container">
+                    <!-- Información del paciente -->
+                    <div class="paciente-info-section">
+                        <div class="info-card">
+                            <h3>Información del Paciente</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Nombre:</label>
+                                    <span id="modal-paciente-nombre">--</span>
                                 </div>
-                                <button type="button" class="btn-calcular" onclick="calcularItem('grasa')">Bueno</button>
-                            </div>
-
-                            <!-- Índice de Masa Corporal -->
-                            <div class="form-group">
-                                <label>Índice de Masa Corporal (IMC)</label>
-                                <div class="dual-input">
-                                    <input type="number" id="imc-valor" placeholder="Valor" step="0.1">
-                                    <input type="text" id="imc-calculada" placeholder="Edad Calculada" readonly>
+                                <div class="info-item">
+                                    <label>Edad Cronológica:</label>
+                                    <span id="modal-paciente-edad">--</span>
                                 </div>
-                                <button type="button" class="btn-calcular" onclick="calcularItem('imc')">Bueno</button>
-                            </div>
-
-                            <!-- Reflejos Digitales -->
-                            <div class="form-group">
-                                <label>Reflejos Digitales (cm)</label>
-                                <div class="triple-input">
-                                    <input type="number" id="reflejos-1" placeholder="Medición 1" step="0.1">
-                                    <input type="number" id="reflejos-2" placeholder="Medición 2" step="0.1">
-                                    <input type="number" id="reflejos-3" placeholder="Medición 3" step="0.1">
+                                <div class="info-item">
+                                    <label>Género:</label>
+                                    <span id="modal-paciente-genero">--</span>
                                 </div>
-                                <input type="text" id="reflejos-calculada" placeholder="Edad Calculada" readonly>
-                                <button type="button" class="btn-calcular" onclick="calcularItem('reflejos')">Bueno</button>
-                            </div>
-
-                            <!-- Acomodación Visual -->
-                            <div class="form-group">
-                                <label>Acomodación Visual (cm)</label>
-                                <div class="dual-input">
-                                    <input type="number" id="acomodacion-valor" placeholder="Valor" step="0.1">
-                                    <input type="text" id="acomodacion-calculada" placeholder="Edad Calculada" readonly>
+                                <div class="info-item">
+                                    <label>Fecha:</label>
+                                    <span id="modal-fecha-test">--</span>
                                 </div>
-                                <button type="button" class="btn-calcular" onclick="calcularItem('acomodacion')">Bueno</button>
                             </div>
-
-                            <!-- Balance Estático -->
-                            <div class="form-group">
-                                <label>Balance Estático (seg)</label>
-                                <div class="triple-input">
-                                    <input type="number" id="balance-1" placeholder="Medición 1" step="0.1">
-                                    <input type="number" id="balance-2" placeholder="Medición 2" step="0.1">
-                                    <input type="number" id="balance-3" placeholder="Medición 3" step="0.1">
-                                </div>
-                                <input type="text" id="balance-calculada" placeholder="Edad Calculada" readonly>
-                                <button type="button" class="btn-calcular" onclick="calcularItem('balance')">Bueno</button>
-                            </div>
-
-                            <!-- Hidratación Cutánea -->
-                            <div class="form-group">
-                                <label>Hidratación Cutánea (seg)</label>
-                                <div class="dual-input">
-                                    <input type="number" id="hidratacion-valor" placeholder="Valor" step="0.1">
-                                    <input type="text" id="hidratacion-calculada" placeholder="Edad Calculada" readonly>
-                                </div>
-                                <button type="button" class="btn-calcular" onclick="calcularItem('hidratacion')">Bueno</button>
-                            </div>
-
-                            <!-- Tensión Arterial Sistólica -->
-                            <div class="form-group">
-                                <label>Tensión Arterial Sistólica (mmHg)</label>
-                                <div class="dual-input">
-                                    <input type="number" id="sistolica-valor" placeholder="Valor" step="1">
-                                    <input type="text" id="sistolica-calculada" placeholder="Edad Calculada" readonly>
-                                </div>
-                                <button type="button" class="btn-calcular" onclick="calcularItem('sistolica')">Bueno</button>
-                            </div>
-
-                            <!-- Tensión Arterial Diastólica -->
-                            <div class="form-group">
-                                <label>Tensión Arterial Diastólica (mmHg)</label>
-                                <div class="dual-input">
-                                    <input type="number" id="diastolica-valor" placeholder="Valor" step="1">
-                                    <input type="text" id="diastolica-calculada" placeholder="Edad Calculada" readonly>
-                                </div>
-                                <button type="button" class="btn-calcular" onclick="calcularItem('diastolica')">Bueno</button>
-                            </div>
-
-                            <!-- Edad Cronológica -->
-                            <div class="form-group">
-                                <label>Edad Cronológica</label>
-                                <input type="number" id="edad-cronologica" placeholder="Años" readonly>
-                            </div>
-
-                            <!-- Edad Biofísica -->
-                            <div class="form-group">
-                                <label>Edad Biofísica</label>
-                                <input type="number" id="edad-biofisica" placeholder="Calculada automáticamente" readonly>
-                            </div>
-
-                            <!-- Edad Diferencial -->
-                            <div class="form-group">
-                                <label>Edad Diferencial</label>
-                                <input type="text" id="edad-diferencial" placeholder="Diferencia" readonly>
-                            </div>
-                        </form>
+                        </div>
                     </div>
 
-                    <div class="biofisico-graficos">
-                        <h3><i class="fas fa-chart-line"></i> Gráficos por Items</h3>
-                        <div class="graficos-grid">
+                    <!-- Formulario de mediciones -->
+                    <div class="mediciones-section">
+                        <h3>Mediciones Biofísicas</h3>
+                        <div class="mediciones-grid">
+                            <div class="medicion-item">
+                                <label for="porcentaje-grasa">% Grasa Corporal:</label>
+                                <input type="number" id="porcentaje-grasa" step="0.1" min="0" max="100">
+                                <span class="unit">%</span>
+                            </div>
+                            <div class="medicion-item">
+                                <label for="imc">Índice de Masa Corporal:</label>
+                                <input type="number" id="imc" step="0.1" min="0" max="50">
+                                <span class="unit">kg/m²</span>
+                            </div>
+                            <div class="medicion-item">
+                                <label>Reflejos Digitales (3 mediciones):</label>
+                                <div class="mediciones-multiples">
+                                    <input type="number" id="reflejos-1" step="0.1" placeholder="Med. 1">
+                                    <input type="number" id="reflejos-2" step="0.1" placeholder="Med. 2">
+                                    <input type="number" id="reflejos-3" step="0.1" placeholder="Med. 3">
+                                </div>
+                                <span class="unit">ms</span>
+                            </div>
+                            <div class="medicion-item">
+                                <label for="acomodacion-visual">Acomodación Visual:</label>
+                                <input type="number" id="acomodacion-visual" step="0.1" min="0">
+                                <span class="unit">dioptrías</span>
+                            </div>
+                            <div class="medicion-item">
+                                <label>Balance Estático (3 mediciones):</label>
+                                <div class="mediciones-multiples">
+                                    <input type="number" id="balance-1" step="0.1" placeholder="Med. 1">
+                                    <input type="number" id="balance-2" step="0.1" placeholder="Med. 2">
+                                    <input type="number" id="balance-3" step="0.1" placeholder="Med. 3">
+                                </div>
+                                <span class="unit">seg</span>
+                            </div>
+                            <div class="medicion-item">
+                                <label for="hidratacion-cutanea">Hidratación Cutánea:</label>
+                                <input type="number" id="hidratacion-cutanea" step="0.1" min="0">
+                                <span class="unit">%</span>
+                            </div>
+                            <div class="medicion-item">
+                                <label for="presion-sistolica">Presión Sistólica:</label>
+                                <input type="number" id="presion-sistolica" step="1" min="0">
+                                <span class="unit">mmHg</span>
+                            </div>
+                            <div class="medicion-item">
+                                <label for="presion-diastolica">Presión Diastólica:</label>
+                                <input type="number" id="presion-diastolica" step="1" min="0">
+                                <span class="unit">mmHg</span>
+                            </div>
+                            <div class="medicion-item">
+                                <label for="pulso-reposo">Pulso en Reposo:</label>
+                                <input type="number" id="pulso-reposo" step="1" min="0">
+                                <span class="unit">bpm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div class="resultados-section">
+                        <h3>Resultados del Análisis</h3>
+                        <div class="resultados-grid">
+                            <div class="resultado-principal">
+                                <div class="edad-biofisica">
+                                    <label>Edad Biofísica:</label>
+                                    <span id="edad-biofisica-resultado">--</span>
+                                    <span class="unit">años</span>
+                                </div>
+                                <div class="edad-diferencial">
+                                    <label>Diferencia:</label>
+                                    <span id="edad-diferencial-resultado">--</span>
+                                    <span class="unit">años</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gráficos de parámetros -->
+                        <div class="graficos-parametros">
+                            <h4>Análisis por Parámetro</h4>
                             <div class="grafico-item">
-                                <h4>% Grasa</h4>
+                                <h4>% Grasa Corporal</h4>
                                 <div class="grafico-values">
                                     <span>Edad Calculada: <span id="grafico-grasa">--</span></span>
                                     <span>Diferencia: <span id="diff-grasa">--</span></span>
@@ -253,7 +227,7 @@ html_content = '''<!DOCTYPE html>
                                 <div class="status-indicator" id="status-grasa">Bueno</div>
                             </div>
                             <div class="grafico-item">
-                                <h4>IMC</h4>
+                                <h4>Índice de Masa Corporal</h4>
                                 <div class="grafico-values">
                                     <span>Edad Calculada: <span id="grafico-imc">--</span></span>
                                     <span>Diferencia: <span id="diff-imc">--</span></span>
@@ -340,11 +314,7 @@ html_content = '''<!DOCTYPE html>
     <script src="js/router.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/historias.js"></script>
+    <script src="js/biophysics-test.js"></script>
     <script src="js/main.js"></script>
 </body>
-</html>'''
-
-with open('index.html', 'w', encoding='utf-8') as f:
-    f.write(html_content)
-
-print("✅ Archivo index.html creado exitosamente")
+</html>

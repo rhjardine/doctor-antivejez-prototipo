@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo de Pacientes
+model Patient {
+  id                String   @id @default(cuid())
+  foto              String?
+  nacionalidad      String
+  identificacion    String   @unique
+  fechaHistoria     DateTime @default(now())
+  apellidos         String
+  nombres           String
+  fechaNacimiento   DateTime
+  edadCronologica   Int
+  genero            String
+  lugarNacimiento   String
+  telefono          String?
+  estadoCivil       String?
+  profesion         String?
+  paisResidencia    String
+  estadoResidencia  String
+  ciudad            String
+  direccion         String?
+  observaciones     String?
+  email             String?
+  fechaCreacion     DateTime @default(now())
+  fechaActualizacion DateTime @updatedAt
+  
+  // Relaciones
+  testsBiofisicos   BiophysicsTest[]
+  
+  @@map("patients")
+}
+
+// Modelo de Tests Biofísicos
+model BiophysicsTest {
+  id                String   @id @default(cuid())
+  pacienteId        String
+  fecha             DateTime @default(now())
+  genero            String
+  
+  // Mediciones individuales
+  grasa             Float?
+  grasaEdadCalculada Float?
+  
+  imc               Float?
+  imcEdadCalculada  Float?
+  
+  reflejosMed1      Float?
+  reflejosMed2      Float?
+  reflejosMed3      Float?
+  reflejosPromedio  Float?
+  reflejosEdadCalculada Float?
+  
+  acomodacion       Float?
+  acomodacionEdadCalculada Float?
+  
+  balanceMed1       Float?
+  balanceMed2       Float?
+  balanceMed3       Float?
+  balancePromedio   Float?
+  balanceEdadCalculada Float?
+  
+  hidratacion       Float?
+  hidratacionEdadCalculada Float?
+  
+  sistolica         Float?
+  sistolicaEdadCalculada Float?
+  
+  diastolica        Float?
+  diastolicaEdadCalculada Float?
+  
+  pulsoReposo       Float?
+  pulsoReposoEdadCalculada Float?
+  
+  // Resultados finales
+  edadCronologica   Float
+  edadBiofisica     Float?
+  edadDiferencial   Float?
+  evaluacion        String?
+  
+  fechaCreacion     DateTime @default(now())
+  fechaActualizacion DateTime @updatedAt
+  
+  // Relaciones
+  paciente          Patient  @relation(fields: [pacienteId], references: [id], onDelete: Cascade)
+  
+  @@map("biophysics_tests")
+}
+
+// Modelo de Rangos para cálculos biofísicos
+model Range {
+  id          Int      @id @default(autoincrement())
+  name        String
+  minAge      Int
+  maxAge      Int
+  description String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relaciones
+  boards      Board[]
+  
+  @@map("ranges")
+}
+
+// Modelo de Boards (tablas de valores biofísicos)
+model Board {
+  id        Int      @id @default(autoincrement())
+  rangeId   Int
+  type      String   // FORM_BIOPHYSICS
+  name      String   // male_fat, female_fat, etc.
+  min       Float
+  max       Float
+  inverse   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relaciones
+  range     Range    @relation(fields: [rangeId], references: [id], onDelete: Cascade)
+  
+  @@map("boards")
+}
+
+// Modelo de Usuarios (para futuras funcionalidades)
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  firstName   String
+  lastName    String
+  role        String   @default("DOCTOR")
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("users")
+}
+
+// Modelo de Sesiones (para autenticación)
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  @@map("sessions")
+}

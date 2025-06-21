@@ -41,6 +41,9 @@ class DoctorAntivejezApp {
             window.router.addRoute(path, handler);
         });
         
+        // Marcar el router como inicializado
+        window.router.setInitialized();
+        
         // Manejar la navegación inicial
         window.router.handleRoute();
     }

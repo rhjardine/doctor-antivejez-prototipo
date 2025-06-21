@@ -2,6 +2,8 @@ class Router {
     constructor() {
         this.routes = {};
         this.currentRoute = null;
+        this.isInitialized = false;
+        this.pendingRoute = null;
         this.init();
     }
 
@@ -15,6 +17,15 @@ class Router {
         this.routes[path] = handler;
     }
 
+    setInitialized() {
+        this.isInitialized = true;
+        // If there was a pending route, handle it now
+        if (this.pendingRoute) {
+            this.handleRoute();
+            this.pendingRoute = null;
+        }
+    }
+
     navigate(path) {
         window.location.hash = path;
         this.handleRoute();
@@ -23,6 +34,13 @@ class Router {
     handleRoute() {
         const hash = window.location.hash.slice(1) || 'dashboard';
         console.log('Navegando a:', hash);
+        
+        // If routes aren't initialized yet, store the pending route
+        if (!this.isInitialized) {
+            this.pendingRoute = hash;
+            console.log('Router no inicializado, ruta pendiente:', hash);
+            return;
+        }
         
         // Manejar rutas dinámicas para pacientes
         if (hash.startsWith('historias/')) {
@@ -41,7 +59,13 @@ class Router {
             this.routes[hash]();
         } else {
             console.warn(`Ruta no encontrada: ${hash}`);
-            this.navigate('dashboard');
+            // Prevent infinite loop by checking if we're already trying to go to dashboard
+            if (hash !== 'dashboard' && this.routes['dashboard']) {
+                this.navigate('dashboard');
+            } else if (!this.routes['dashboard']) {
+                // If dashboard route doesn't exist, show error
+                this.showError('Sistema no inicializado correctamente. Las rutas no están disponibles.');
+            }
         }
     }
 
